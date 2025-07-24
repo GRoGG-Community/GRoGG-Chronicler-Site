@@ -1,5 +1,5 @@
 // har har please send help, ohh Coding Jesus have mercy
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './css/App.css';
 import './css/Treaties.css';
 import './css/Empires.css';
@@ -8,7 +8,6 @@ import './css/Accounts.css';
 import { getNationPairs } from './utils/getNationPairs';
 import TreatyDialog from './components/TreatyDialog';
 import TreatyView from './components/TreatyView';
-import EmpireEditPanel from './components/EmpireEditPanel';
 import EmpirePanel from './components/EmpirePanel';
 import MenuDropdown from './components/MenuDropdown';
 import {
@@ -21,15 +20,12 @@ import {
 } from './handlers/handlers';
 import { useBurgerMenu } from './components/BurgerMenu';
 import RoadmapTab from './components/RoadmapTab';
-import { TREATY_STATUSES } from './utils/treatyStatuses';
-import { TREATY_STATUS_OPTIONS } from './utils/treatyStatusOptions';
 import AccountList from './components/AccountList';
 import MessageList from './components/MessageList';
 import EmpireList from './components/EmpireList';
 import TreatyList from './components/TreatyList';
 import SearchSortBar from './components/SearchSortBar';
 import { ErrorMessage, LoadingMessage } from './components/Messages';
-import Dropdown from './components/Dropdown';
 import cutOffDotter from './utils/cutOffDotter';
 
 function App() {
@@ -548,223 +544,6 @@ function App() {
     }
     function canTransferTreaty(treaty) {
         return account && account.username === "GameMaster";
-    }
-
-    function handleAddTreaty() {
-        setTreatyDialog({
-            open: true,
-            mode: 'new',
-            data: null
-        });
-        setTreatyError('');
-    }
-
-    function handleEditTreaty(treaty) {
-        setTreatyDialog({
-            open: true,
-            mode: 'edit',
-            data: treaty
-        });
-        setTreatyError('');
-    }
-
-    function handleViewTreaty(treaty) {
-        setTreatyDialog({
-            open: true,
-            mode: 'view',
-            data: treaty
-        });
-        setTreatyError('');
-    }
-
-    function handleCancelTreatyForm() {
-        setTreatyDialog({
-            open: false,
-            mode: null,
-            data: null
-        });
-        setTreatyError('');
-    }
-
-    function handleSaveTreaty(e) {
-        e.preventDefault();
-        setTreatyError('');
-        setTreatySaving(true);
-        const isEdit = treatyEditId != null;
-        const form = { ...treatyForm };
-        if (!form.title.trim() || !form.content.trim() || !form.participants.length) {
-            setTreatyError('Title, content, and at least one participant are required.');
-            setTreatySaving(false);
-            return;
-        }
-        if (!form.owner) form.owner = account ? account.username : '';
-        if (!form.status) form.status = 'discussion';
-        if (!form.id) form.id = isEdit ? treatyEditId : Date.now().toString();
-
-        fetch('/api/treaties', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                return fetch('/treaties.json?ts=' + Date.now())
-                    .then(res => res.json())
-                    .then(data2 => {
-                        setTreaties(Array.isArray(data2) ? data2 : []);
-                        setTreatyForm(null);
-                        setTreatyEditId(null);
-                        setShowTreatyForm(false);
-                        setTreatyViewId(form.id);
-                    });
-            } else {
-                setTreatyError(data.error || 'Failed to save treaty');
-            }
-        })
-        .catch(() => setTreatyError('Failed to save treaty'))
-        .finally(() => setTreatySaving(false));
-    }
-
-    function handleTransferTreatyOwner(treaty, newOwner) {
-        if (!canTransferTreaty(treaty)) return;
-        setTreatySaving(true);
-        fetch('/api/treaties/transfer', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: treaty.id, newOwner })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                return fetch('/treaties.json')
-                    .then(res => res.json())
-                    .then(data2 => setTreaties(Array.isArray(data2) ? data2 : []));
-            }
-        })
-        .finally(() => setTreatySaving(false));
-    }
-
-    function handleTreatyFormChange(e) {
-        const { name, value, type, options } = e.target;
-        if (type === 'select-multiple') {
-            const vals = Array.from(options).filter(o => o.selected).map(o => o.value);
-            setTreatyForm(f => ({ ...f, [name]: vals }));
-        } else {
-            setTreatyForm(f => ({ ...f, [name]: value }));
-        }
-    }
-
-    function renderTreatyForm() {
-        if (!treatyForm) return null;
-        return (
-            <form className="treaty-form card" onSubmit={handleSaveTreaty}>
-                <div className="treaty-form-header">
-                    <input
-                        name="title"
-                        placeholder="Treaty Title"
-                        value={treatyForm.title}
-                        onChange={handleTreatyFormChange}
-                        className="login-input"
-                        required
-                        disabled={treatySaving}
-                    />
-                    <Dropdown
-                        value={treatyForm.status}
-                        onChange={handleTreatyFormChange}
-                        options={TREATY_STATUS_OPTIONS}
-                        placeholder="Select status..."
-                        className="login-input"
-                        disabled={treatySaving}
-                    />
-                </div>
-                <div className="treaty-form-participants">
-                    <div className="participants-select">
-                        <label className="participants-label">Participants</label>
-                        <select
-                            name="participants"
-                            value={treatyForm.participants}
-                            onChange={handleTreatyFormChange}
-                            className="login-input"
-                            multiple
-                            disabled={treatySaving}
-                        >
-                            {getEmpireNames().map(e => (
-                                <option key={e} value={e}>{e}</option>
-                            ))}
-                        </select>
-                    </div>
-                    {account && account.username === "GameMaster" && (
-                        <div className="owner-select">
-                            <label className="owner-label">Owner:</label>
-                            <Dropdown
-                                value={treatyForm.owner}
-                                onChange={handleTreatyFormChange}
-                                options={Object.keys(accounts).map(acc => ({ value: acc, label: acc }))}
-                                placeholder="Select owner..."
-                                className="login-input"
-                                disabled={treatySaving}
-                            />
-                        </div>
-                    )}
-                </div>
-                <label className="treaty-content-label">Treaty Content</label>
-                <textarea
-                    name="content"
-                    placeholder="Treaty Content"
-                    value={treatyForm.content}
-                    onChange={handleTreatyFormChange}
-                    className="login-input"
-                    rows={9}
-                    required
-                />
-                <div className="treaty-form-actions">
-                    <button type="submit" className="empire-save-btn" disabled={treatySaving}>
-                        {treatyEditId ? "Save Changes" : "Create Treaty"}
-                    </button>
-                    <button type="button" className="empire-back-btn" onClick={handleCancelTreatyForm} disabled={treatySaving}>Cancel</button>
-                    {treatyError && <ErrorMessage className="treaty-error">{treatyError}</ErrorMessage>}
-                </div>
-            </form>
-        );
-    }
-
-    function renderTreatyView(treaty) {
-        const statusObj = TREATY_STATUSES.find(s => s.value === treaty.status);
-        return (
-            <div className="treaty-view card">
-                <div className="treaty-view-header">
-                    <h2 className="treaty-title">{treaty.title}</h2>
-                    <span className="treaty-status" style={{color: statusObj.color}}>{statusObj ? statusObj.label : treaty.status}</span>
-                </div>
-                <div className="treaty-view-owner">
-                    Owner: {treaty.owner}
-                </div>
-                <div className="treaty-view-participants">
-                    <b>Participants:</b> {treaty.participants && treaty.participants.length > 0 ? treaty.participants.join(', ') : <i>None</i>}
-                </div>
-                <div className="treaty-content-static">
-                    {treaty.content}
-                </div>
-                <div className="treaty-view-actions">
-                    <button className="empire-back-btn" onClick={() => setTreatyViewId(null)}>Back</button>
-                    {canEditTreaty(treaty) && (
-                        <button className="empire-save-btn" onClick={() => handleEditTreaty(treaty)}>Edit</button>
-                    )}
-                    {canTransferTreaty(treaty) && (
-                        <select
-                            value={treaty.owner}
-                            onChange={e => handleTransferTreatyOwner(treaty, e.target.value)}
-                            className="owner-transfer-select"
-                        >
-                            {Object.keys(accounts).map(acc => (
-                                <option key={acc} value={acc}>{acc}</option>
-                            ))}
-                        </select>
-                    )}
-                </div>
-            </div>
-        );
     }
 
     const showAccountsTab = account && account.username === "GameMaster";
