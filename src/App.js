@@ -22,11 +22,12 @@ import { useBurgerMenu } from './components/BurgerMenu';
 import RoadmapTab from './components/RoadmapTab';
 import AccountList from './components/AccountList';
 import MessageList from './components/MessageList';
-import EmpireList from './components/EmpireList';
+import EmpireList from './components/empire/EmpireList';
 import TreatyList from './components/TreatyList';
 import SearchSortBar from './components/SearchSortBar';
 import { ErrorMessage, LoadingMessage } from './components/Messages';
 import cutOffDotter from './utils/cutOffDotter';
+import EmpireListController from './components/empire/EmpireListController';
 
 function App() {
     const [empires, setEmpires] = useState([]);
@@ -1006,13 +1007,13 @@ function App() {
                                 sortClass="empire-sort-select"
                             />
                             <div className="empires-info-list" style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'flex-start'}}>
-                                <EmpireList
-                                    empires={sortedEmpires.map(name => empires.find(e => e.name === name))}
+                                <EmpireListController
                                     accounts={accounts}
                                     account={account}
                                     setEmpirePage={setEmpirePage}
                                     setEditEmpire={setEditEmpire}
-                                    getEmpireAccount={getEmpireAccount}
+                                    setNewEmpireLoading={setNewEmpireLoading}
+                                    setNewEmpireError={setNewEmpireError}
                                 />
                             </div>
                         </section>

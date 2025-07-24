@@ -286,3 +286,33 @@ export function handleDeleteEmpire(
         .finally(() => setNewEmpireLoading(false));
 }
 
+export function handleLinkAccount(empireName, accountName) {
+    fetch('/api/empires/link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ empireName, accountName })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            setEmpires(prev =>
+                prev.map(e => e.name === empireName ? { ...e, account: accountName } : e)
+            );
+        }
+    });
+}
+export function handleUnlinkAccount(empireName) {
+    fetch('/api/empires/unlink', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ empireName })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            setEmpires(prev =>
+                prev.map(e => e.name === empireName ? { ...e, account: null } : e)
+            );
+        }
+    });
+}

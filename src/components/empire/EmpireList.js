@@ -1,9 +1,8 @@
-import React from 'react';
-import ActionButton from './ActionButton';
-import ListContainer from './ListContainer';
-import { EmptyMessage, LoadingMessage } from './Messages';
-import Dropdown from './Dropdown';
-import cutOffDotter from '../utils/cutOffDotter';
+import ActionButton from '../ActionButton';
+import ListContainer from '../ListContainer';
+import { EmptyMessage, LoadingMessage } from '../Messages';
+import Dropdown from '../Dropdown';
+import cutOffDotter from '../../utils/cutOffDotter';
 
 export default function EmpireList({
     empires,
