@@ -1,0 +1,626 @@
+@import './colorbase.css';
+
+.treaties-section.card {
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1100px;
+    box-sizing: border-box;
+}
+
+.treaties-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.treaties-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.treaties-list-container {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.treaties-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.treaty-item {
+    background: var(--primary-bg);
+    border-radius: 10px;
+    border: 1.5px solid var(--accent);
+    box-shadow: 0 1px 8px #0002;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.treaty-info {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.treaty-title {
+    font-weight: bold;
+    font-size: 1.13rem;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--accent);
+}
+
+.treaty-meta {
+    font-style: italic;
+    color: #bbb;
+    font-size: 0.98em;
+    margin-top: 0.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.treaty-owner {
+    margin-bottom: 0.2em;
+}
+
+.treaty-participants {
+    color: #b3cfff;
+    font-size: 1.05em;
+}
+
+.treaty-content {
+    margin-top: 0.7em;
+    color: #e0e6ed;
+    font-size: 1.08em;
+    max-height: 3.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-line;
+}
+
+.treaty-status {
+    font-size: 1.1em;
+    color: var(--accent);
+    font-weight: bold;
+    background: var(--primary-bg);
+    border-radius: 8px;
+    padding: 0.3em 1.2em;
+    white-space: nowrap;
+    height: 2.2rem;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+}
+
+.treaty-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+    flex-wrap: wrap;
+}
+
+.treaty-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+
+.empire-view-btn,
+.empire-save-btn {
+    min-width: 90px;
+    max-width: 120px;
+    font-size: 1em;
+    padding: 0.3rem 1.1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 2.2rem;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.empire-view-btn:hover,
+.empire-save-btn:hover {
+    background: #0090c0;
+}
+
+.treaties-header .empire-save-btn {
+    min-width: 140px;
+    max-width: 220px;
+    font-size: 1em;
+    padding: 0.5rem 1.2rem;
+    height: 2.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.treaties-header .empire-save-btn:hover {
+    background: #0090c0;
+}
+
+.treaty-form.card,
+.treaty-view.card {
+    background: var(--primary-bg);
+    border: 1.5px solid var(--accent);
+    border-radius: 12px;
+    box-shadow: 0 2px 16px #0002;
+    padding: 2.2rem 2.5rem;
+    width: 100%;
+    max-width: 900px;
+    min-width: 0;
+    margin: 0 auto;
+    gap: 1.2rem;
+    box-sizing: border-box;
+}
+
+.treaty-form-header,
+.treaty-form-participants,
+.treaty-form-actions {
+    width: 100%;
+}
+
+.treaty-form-header {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+    align-items: center;
+}
+.treaty-form-header input,
+.treaty-form-header select {
+    flex: 1;
+    font-size: 1.1em;
+}
+
+.treaty-form-participants {
+    margin-bottom: 1.2rem;
+    display: flex;
+    gap: 1.2rem;
+}
+.participants-select {
+    flex: 1;
+}
+.participants-label {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.05em;
+    margin-bottom: 0.2em;
+    display: block;
+}
+.owner-select {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.owner-label {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.05em;
+    margin-bottom: 0.2em;
+    display: block;
+    align-self: flex-end;
+}
+
+.treaty-content-label {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 1.05em;
+    margin-bottom: 0.2em;
+    display: block;
+}
+
+.treaty-form-actions {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    margin-top: 1.2rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+.treaty-error {
+    margin-left: 2em;
+}
+
+.treaty-view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+}
+.treaty-title {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+}
+.treaty-status {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--accent);
+    background: var(--primary-bg);
+    border-radius: 8px;
+    padding: 0.3em 1.2em;
+}
+.treaty-view-owner {
+    margin-bottom: 1.2rem;
+    font-style: italic;
+    color: #bbb;
+    font-size: 1em;
+    text-align: right;
+}
+.treaty-view-participants {
+    margin-bottom: 1.2rem;
+    color: #b3cfff;
+    font-size: 1em;
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 0.5em 1em;
+    border: 1px solid var(--border);
+}
+.treaty-content-static {
+    min-height: 120px;
+    max-height: 200px;
+    overflow: hidden;
+    white-space: pre;
+    font-size: 1.08em;
+    color: #e0e6ed;
+    background: var(--primary-bg);
+    border-radius: 8px;
+    padding: 1.2em 1.2em;
+    font-style: italic;
+    border: 1.5px solid var(--accent);
+    box-shadow: 0 2px 8px #0001;
+    margin-bottom: 0;
+}
+.treaty-view-actions {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+.owner-transfer-select {
+    min-width: 140px;
+    max-width: 180px;
+    border-radius: 8px;
+    border: 1.5px solid var(--accent);
+    background: var(--primary-bg);
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1em;
+    margin-left: 0.5em;
+    height: 2.2rem;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.treaty-dialog-overlay {
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.treaty-dialog {
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 4px 32px #0008;
+    border: 2px solid var(--accent);
+    padding: 2.2rem 2.5rem;
+    min-width: 320px;
+    max-width: 98vw;
+    width: 100%;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    color: var(--text);
+}
+
+.treaty-dialog h2 {
+    margin: 0 0 1rem 0;
+    color: var(--accent);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.treaty-dialog label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.treaty-dialog input,
+.treaty-dialog select,
+.treaty-dialog textarea {
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--primary-bg);
+    color: var(--text);
+    padding: 0.7rem 1rem;
+    margin-bottom: 0.7rem;
+    outline: none;
+    transition: border 0.2s, background 0.2s;
+}
+
+.treaty-dialog textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.treaty-dialog .treaty-form-actions {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    margin-top: 1.2rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.treaty-dialog .empire-save-btn,
+.treaty-dialog .empire-back-btn {
+    min-width: 110px;
+    max-width: 160px;
+    font-size: 1em;
+    padding: 0.3rem 1.1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2rem;
+}
+
+.treaty-dialog .empire-back-btn {
+    background: #555;
+    color: #fff;
+}
+.treaty-dialog .empire-save-btn:hover {
+    background: #0090c0;
+}
+.treaty-dialog .empire-back-btn:hover {
+    background: #888;
+}
+
+.treaty-dialog .owner-transfer-select {
+    min-width: 140px;
+    max-width: 180px;
+    border-radius: 8px;
+    border: 1.5px solid var(--accent);
+    background: var(--primary-bg);
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1em;
+    margin-left: 0.5em;
+    height: 2.2rem;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.treaty-dialog .treaty-error {
+    color: #ff4d4d;
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+}
+
+.participants-dropdown {
+    position: relative;
+    min-height: 2.2rem;
+    cursor: pointer;
+    background: var(--primary-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    margin-bottom: 0.7rem;
+    margin-top: 3rem;
+    color: var(--text);
+    user-select: none;
+}
+
+/* .participants-dropdown-item styles for dropdown rows */
+.participants-dropdown-item {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 1.08rem;
+    text-align: left;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: background 0.15s, color 0.15s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    position: relative;
+}
+.participants-dropdown-item:hover,
+.participants-dropdown-item:focus {
+    background: var(--accent);
+    color: #fff;
+}
+
+.participants-dropdown-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* Ensure dropdown is always below the button and never overlays it */
+    top: calc(100% + 8px);
+    z-index: 1001;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-top: 0;
+    padding-top: 0.3em;
+    box-shadow: 0 2px 12px #0004;
+    max-height: 220px;
+    overflow-y: auto;
+    /* Prevent pointer events on parent from closing dropdown when clicking inside */
+    pointer-events: auto;
+}
+
+.participants-dropdown-list label {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    color: var(--text);
+    background: transparent;
+    transition: background 0.15s;
+}
+
+.participants-dropdown-list label:hover {
+    background: rgba(0,191,255,0.10);
+}
+
+.participants-dropdown-list input[type="checkbox"] {
+    accent-color: var(--accent);
+    margin-right: 0.5em;
+}
+
+.treaty-search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem 1rem;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+    background: var(--primary-bg);
+    color: var(--text);
+}
+
+.treaty-search-clear-btn {
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+.treaty-sort-select {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    background: var(--primary-bg);
+    color: var(--text);
+    margin-left: 0.5rem;
+}
+
+/* Add this to fix account dropdown text cutoff in Manage Empires */
+.account-select {
+    min-width: 160px;
+    max-width: 100%;
+    width: 100%;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--primary-bg);
+    color: var(--text);
+    font-size: 1em;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: visible;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+@media (max-width: 700px) {
+    .treaty-dialog {
+        padding: 1.1rem 0.5rem;
+        min-width: 0;
+        max-width: 98vw;
+    }
+}
+
+@media (max-width: 900px) {
+    .treaties-section.card, .treaty-form.card, .treaty-view.card {
+        max-width: 98vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .treaty-actions, .treaty-buttons, .treaty-form-actions, .treaty-view-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+}
+
+

@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Diplomatic Message Boards",
+    "status": "completed",
+    "description": "Core feature for empire-to-empire communication."
+  },
+  {
+    "title": "Empire Management",
+    "status": "completed",
+    "description": "Add, edit, and assign accounts to empires."
+  },
+  {
+    "title": "Account Management",
+    "status": "completed",
+    "description": "Create, edit, and delete user accounts. GameMaster controls."
+  },
+  {
+    "title": "Empire Lore & Stats Editor",
+    "status": "completed",
+    "description": "Allow empires to edit and display lore, stats, ethics, civics, and special info."
+  },
+  {
+    "title": "Treaties & Agreements System",
+    "status": "completed",
+    "description": "Create, edit, and manage treaties between empires."
+  },
+  {
+    "title": "Treaty Participants Dropdown",
+    "status": "completed",
+    "description": "Improved UI for selecting treaty participants."
+  },
+  {
+    "title": "Treaty Ownership Transfer",
+    "status": "completed",
+    "description": "GameMaster can transfer treaty ownership between accounts."
+  },
+  {
+    "title": "Treaty Search & Sort",
+    "status": "completed",
+    "description": "Search and sort treaties by title, owner, or participants."
+  },
+  {
+    "title": "Permissions System",
+    "status": "in-progress",
+    "description": "Granular GameMaster permissions for moderation and management."
+  },
+  {
+    "title": "Channel Message Deletion (GM)",
+    "status": "completed",
+    "description": "GameMaster can delete messages from diplomatic channels."
+  },
+  {
+    "title": "Bulk Message Deletion (GM)",
+    "status": "planned",
+    "description": "GameMaster can delete multiple messages at once."
+  },
+  {
+    "title": "Audit Log",
+    "status": "planned",
+    "description": "Track changes and actions for moderation."
+  },
+  {
+    "title": "Role-based Access Control",
+    "status": "planned",
+    "description": "Support for multiple roles beyond GameMaster."
+  },
+  {
+    "title": "UI Fixes & Improvements",
+    "status": "planned",
+    "description": "Fixing UI bugs and improving overall user experience."
+  },
+  {
+    "title": "Empire Search & Sort",
+    "status": "completed",
+    "description": "Search and sort empires and treaties for easier navigation."
+  },
+  {
+    "title": "Mobile Responsiveness",
+    "status": "in-progress",
+    "description": "Improve UI for mobile and tablet devices."
+  },
+  {
+    "title": "Responsive UI Improvements",
+    "status": "in-progress",
+    "description": "Enhance layout and usability on mobile and tablet devices."
+  },
+  {
+    "title": "Light Mode",
+    "status": "planned",
+    "description": "Add a toggle for dark/light theme."
+  },
+  {
+    "title": "Empire Color Customization",
+    "status": "planned",
+    "description": "Let empires pick a color for their cards and messages."
+  },
+  {
+    "title": "Empire Flags & Icons",
+    "status": "planned",
+    "description": "Allow empires to upload and display custom flags or icons."
+  },
+  {
+    "title": "Notifications",
+    "status": "planned",
+    "description": "Notify users of new messages, treaties, or changes."
+  },
+  {
+    "title": "Treaty Expiry Reminders",
+    "status": "planned",
+    "description": "Notify users when treaties are about to expire."
+  },
+  {
+    "title": "Treaty Export/Import",
+    "status": "planned",
+    "description": "Allow treaties to be exported/imported as JSON for backup or transfer."
+  },
+  {
+    "title": "Empire Info Export",
+    "status": "planned",
+    "description": "Export empire lore and stats for sharing or backup."
+  },
+  {
+    "title": "Quick Search Everywhere",
+    "status": "planned",
+    "description": "Add instant search bars to all major lists and panels."
+  },
+  {
+    "title": "Pinned Empires",
+    "status": "planned",
+    "description": "Allow users to pin favorite empires for quick access."
+  },
+  {
+    "title": "Channel Pinning",
+    "status": "planned",
+    "description": "Allow users to pin favorite diplomatic channels."
+  },
+  {
+    "title": "Archiving",
+    "status": "planned",
+    "description": "Archive old diplomatic channels, treaties, etc. for reference."
+  },
+  {
+    "title": "Treaty Change History",
+    "status": "planned",
+    "description": "Show a history of edits and status changes for treaties."
+  },
+  {
+    "title": "Treaty Templates",
+    "status": "planned",
+    "description": "Provide templates for common treaty types."
+  },
+  {
+    "title": "Empire Assignment to Accounts",
+    "status": "completed",
+    "description": "GameMaster can assign or unassign empires to accounts."
+  },
+  {
+    "title": "Empire Merge/Split",
+    "status": "planned",
+    "description": "Tools for merging or splitting empires and their data."
+  },
+  {
+    "title": "Organization/Federation Channels",
+    "status": "planned",
+    "description": "Add support for channels dedicated to organizations, federations, or alliances."
+  },
+  {
+    "title": "Organizations & Federations Tab",
+    "status": "planned",
+    "description": "Introduce a new tab for managing and viewing organizations, federations, and alliances."
+  },
+  {
+    "title": "Personalized Message Templates",
+    "status": "planned",
+    "description": "Selfmade templates for messages."
+  },
+  {
+    "title": "Empire Tab assign Empire to organization",
+    "status": "planned",
+    "description": "Allow empires to be assigned to organizations or federations."
+  },
+  {
+    "title": "Edit JSON files directly from the page",
+    "status": "in-progress",
+    "description": "Edit JSON files in place without having to go directly into the files."
+  },
+  {
+    "title": "Treaty Status Colors",
+    "status": "planned",
+    "description": "Color-code treaty statuses for better visibility."
+  },
+  {
+    "title": "UI2",
+    "status": "planned",
+    "description": "Rework of the UI."
+  },
+  {
+    "title": "Security Updates",
+    "status": "planned",
+    "description": "Enhance security measures and fix vulnerabilities. Such as, moving away from JSON, securing login data, etc."
+  }
+]

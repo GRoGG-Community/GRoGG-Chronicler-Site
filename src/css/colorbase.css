@@ -1,0 +1,18 @@
+:root {
+    --primary-bg: #181f2a;
+    --card-bg: #232b3a;
+    --accent: #00bfff;
+    --text: #e0e6ed;
+    --border: #2c3446;
+    --shadow: 0 2px 8px rgba(0,0,0,0.2);
+    --radius: 8px;
+    --font: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    --chat-partnerA-bg: #263859;
+    --chat-partnerA-text: #e0e6ed;
+    --chat-partnerB-bg: #3a2c59;
+    --chat-partnerB-text: #ffe0b2;
+    --chat-own-bg: #1e2a3a;
+    --chat-other-bg: #2c3446;
+    --chat-own-text: #e0f7fa;
+    --chat-other-text: #ffe0b2;
+}
