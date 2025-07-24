@@ -30,7 +30,7 @@ function saveJson(file, data) {
     fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf8');
 }
 
-// --- SQLite Table Init ---
+// --- SQLite Table Init, left is as FALLBACK if no SQLite files exists ---
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS messages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,34 +40,6 @@ db.serialize(() => {
         timestamp INTEGER,
         deleted INTEGER DEFAULT 0
     )`);
-});
-
-// --- Migration: messages.json to SQLite ---
-function migrateMessagesToSQLite() {
-    if (!fs.existsSync(DATA_FILE)) return;
-    let messagesObj;
-    try { messagesObj = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); } catch { return; }
-    db.serialize(() => {
-        for (const board in messagesObj) {
-            for (const msg of messagesObj[board]) {
-                db.run(
-                    `INSERT INTO messages (board, author, text, timestamp, deleted)
-                     VALUES (?, ?, ?, ?, ?)`,
-                    [
-                        board,
-                        msg.author,
-                        msg.text,
-                        msg.timestamp || Date.now(),
-                        msg.deleted ? 1 : 0
-                    ]
-                );
-            }
-        }
-    });
-    fs.renameSync(DATA_FILE, DATA_FILE + '.bak');
-}
-db.get('SELECT COUNT(*) AS cnt FROM messages', (err, row) => {
-    if (row && row.cnt === 0) migrateMessagesToSQLite();
 });
 
 // --- API: GET messages for a board ---
