@@ -1,3 +1,4 @@
+// har har please send help, ohh Coding Jesus have mercy
 import React, { useState, useEffect, useRef } from 'react';
 import './css/App.css';
 import './css/Treaties.css';
