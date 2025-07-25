@@ -1,17 +1,21 @@
 {
-  "name": "stellarisrp-server",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "My webpack project",
+  "name": "webpack-project",
   "scripts": {
-    "run": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "serve": "webpack serve",
+    "watch": "webpack --watch"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
+  "devDependencies": {
     "express": "^5.1.0",
     "sqlite3": "^5.1.7",
-    "body-parser": "^2.2.0"
+    "body-parser": "^2.2.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.100.2",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   }
 }
