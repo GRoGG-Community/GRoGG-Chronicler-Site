@@ -25,6 +25,11 @@
     "description": "Core feature for empire-to-empire communication."
   },
   {
+    "title": "Better Roadmap Management (on-site) and tabbed/filtered view",
+    "status": "completed",
+    "description": "Improved organization and navigation for the roadmap."
+  },
+  {
     "title": "Empire Management",
     "status": "completed",
     "description": "Add, edit, and assign accounts to empires."
