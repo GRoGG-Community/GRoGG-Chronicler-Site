@@ -14,8 +14,11 @@ const PUBLIC_DIR = path.join(__dirname, 'public');
 const EMPIRE_INFO_FILE = path.join(PUBLIC_DIR, 'empireInfo.json');
 const ACCOUNTS_FILE = path.join(PUBLIC_DIR, 'accounts.json');
 const EMPIRES_FILE = path.join(PUBLIC_DIR, 'empires.json');
+const EMPIRES_BUILD_FILE = path.join(__dirname, 'build', 'empires.json');
 const TREATIES_FILE = path.join(PUBLIC_DIR, 'treaties.json');
 const DATA_FILE = path.join(__dirname, 'messages.json');
+const ROADMAP_FILE = path.join(PUBLIC_DIR, 'roadmap.json');
+const ROADMAP_BUILD_FILE = path.join(__dirname, 'build', 'roadmap.json');
 
 // --- Helper: Load/Save JSON ---
 function loadJson(file, fallback) {
@@ -118,7 +121,10 @@ app.get('/treaties.json', serveJson(TREATIES_FILE, []));
 
 // --- Empires API ---
 function loadEmpires() { return loadJson(EMPIRES_FILE, []); }
-function saveEmpires(empires) { saveJson(EMPIRES_FILE, empires); }
+function saveEmpires(empires) {
+    fs.writeFileSync(EMPIRES_FILE, JSON.stringify(empires, null, 2), 'utf8');
+    fs.writeFileSync(EMPIRES_BUILD_FILE, JSON.stringify(empires, null, 2), 'utf8');
+}
 
 app.post('/api/empires/link', (req, res) => {
     const { empireName, accountName } = req.body;
@@ -319,7 +325,7 @@ app.post('/api/treaties/transfer', (req, res) => {
     }
 });
 
-// Add this route for saving treaties.json
+// --- Add this route for saving treaties.json
 app.post('/api/treaties/json', (req, res) => {
     const treaties = req.body;
     if (!Array.isArray(treaties)) {
@@ -331,6 +337,25 @@ app.post('/api/treaties/json', (req, res) => {
             return res.status(500).json({ success: false, error: 'Failed to write treaties.json' });
         }
         res.json({ success: true });
+    });
+});
+
+// --- Add this route for saving roadmap.json ---
+app.post('/api/roadmap/json', (req, res) => {
+    const roadmap = req.body;
+    if (!Array.isArray(roadmap)) {
+        return res.status(400).json({ success: false, error: 'Roadmap data must be an array.' });
+    }
+    fs.writeFile(ROADMAP_FILE, JSON.stringify(roadmap, null, 2), err => {
+        if (err) {
+            return res.status(500).json({ success: false, error: 'Failed to write roadmap.json (public)' });
+        }
+        fs.writeFile(ROADMAP_BUILD_FILE, JSON.stringify(roadmap, null, 2), err2 => {
+            if (err2) {
+                return res.status(500).json({ success: false, error: 'Failed to write roadmap.json (build)' });
+            }
+            res.json({ success: true });
+        });
     });
 });
 

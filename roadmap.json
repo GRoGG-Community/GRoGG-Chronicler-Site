@@ -1,6 +1,6 @@
 [
   {
-    "title": "Fix Deleted Empire Channels not disappearing",
+    "title": "Fix 1Deleted Empire Channels not disappearing1",
     "status": "in-progress",
     "description": "Fix the issue where deleted empire channels still appear in the UI."
   },
@@ -8,11 +8,6 @@
     "title": "Fix new and deleted empires not updating directly on_action",
     "status": "in-progress",
     "description": "Fix the issue where new and deleted empires do not update the UI immediately."
-  },
-  {
-    "title": "Fix new and deleted accounts not updating directly on_action",
-    "status": "in-progress",
-    "description": "Fix the issue where new and deleted accounts do not update the UI immediately."
   },
   {
     "title": "Scroll function on Treaty View",
@@ -30,9 +25,9 @@
     "description": "Core feature for empire-to-empire communication."
   },
   {
-    "title": "Fix Roadmap JSON Editing",
+    "title": "Better Roadmap Management (on-site) and tabbed/filtered view",
     "status": "completed",
-    "description": "Currently not saving to deployed files."
+    "description": "Improved organization and navigation for the roadmap."
   },
   {
     "title": "Empire Management",
@@ -135,9 +130,9 @@
     "description": "Notify users of new messages, treaties, or changes."
   },
   {
-    "title": "Treaty Expiry Function",
+    "title": "Treaty Expiry Reminders",
     "status": "planned",
-    "description": "Functions for users to see when treaties are expiring."
+    "description": "Notify users when treaties are about to expire."
   },
   {
     "title": "Treaty Export/Import",

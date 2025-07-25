@@ -670,7 +670,7 @@ function App() {
             </header>
             <main className="main-content">
                 {showRoadmap ? (
-                    <RoadmapTab onClose={handleRoadmapToggle} />
+                    <RoadmapTab onClose={handleRoadmapToggle} account={account} />
                 ) : activeTab === 'treaties' ? (
                     <section className="treaties-section card">
                         <div className="treaties-header">
