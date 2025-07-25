@@ -1,5 +1,25 @@
 [
   {
+    "title": "Fix Deleted Empire Channels not disappearing",
+    "status": "in-progress",
+    "description": "Fix the issue where deleted empire channels still appear in the UI."
+  },
+  {
+    "title": "Fix new and deleted empires not updating directly on_action",
+    "status": "in-progress",
+    "description": "Fix the issue where new and deleted empires do not update the UI immediately."
+  },
+  {
+    "title": "Scroll function on Treaty View",
+    "status": "in-progress",
+    "description": "Implement a scroll function to improve navigation in the treaty view."
+  },
+  {
+    "title": "Markdown Integration for Treaty Content and Empire Lore",
+    "status": "in-progress",
+    "description": "Implement a markdown editor for treaty content and empire lore."
+  },
+  {
     "title": "Diplomatic Message Boards",
     "status": "completed",
     "description": "Core feature for empire-to-empire communication."

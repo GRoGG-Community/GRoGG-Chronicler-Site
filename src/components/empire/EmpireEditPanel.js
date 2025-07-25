@@ -1,4 +1,3 @@
-
 export default function EmpireEditPanel({ name, empireInfo, onCancel }) {
         const info = empireInfo[name] || {};
         const [edit, setEdit] = useState(info);

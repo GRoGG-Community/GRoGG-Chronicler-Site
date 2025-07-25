@@ -6,8 +6,8 @@ import './css/Empires.css';
 import './css/Boards.css';
 import './css/Accounts.css';
 import { getNationPairs } from './utils/getNationPairs';
-import TreatyDialog from './components/TreatyDialog';
-import TreatyView from './components/TreatyView';
+import TreatyDialog from './components/treaty/TreatyDialog';
+import TreatyView from './components/treaty/TreatyView';
 import EmpirePanel from './components/EmpirePanel';
 import MenuDropdown from './components/MenuDropdown';
 import {
@@ -20,14 +20,16 @@ import {
 } from './handlers/handlers';
 import { useBurgerMenu } from './components/BurgerMenu';
 import RoadmapTab from './components/RoadmapTab';
-import AccountList from './components/AccountList';
+import AccountList from './components/account/AccountList';
 import MessageList from './components/MessageList';
 import EmpireList from './components/empire/EmpireList';
-import TreatyList from './components/TreatyList';
+import TreatyList from './components/treaty/TreatyList';
 import SearchSortBar from './components/SearchSortBar';
 import { ErrorMessage, LoadingMessage } from './components/Messages';
 import cutOffDotter from './utils/cutOffDotter';
 import EmpireListController from './components/empire/EmpireListController';
+import TreatyListController from './components/treaty/TreatyListController';
+import AccountListController from './components/account/AccountListController';
 
 function App() {
     const [empires, setEmpires] = useState([]);
@@ -258,9 +260,20 @@ function App() {
     }
 
     function getLinkedBoards() {
-        const names = getEmpireNames();
-        return getNationPairs(names);
+        return getNationPairs(empires.map(e => e.name)).filter(([a, b]) =>
+            empires.find(e => e.name === a) && empires.find(e => e.name === b)
+        );
     }
+    useEffect(() => {
+        if (!selected) return;
+        const [a, b] = selected.split('|');
+        const existsA = empires.find(e => e.name === a);
+        const existsB = empires.find(e => e.name === b);
+        if (!existsA || !existsB) {
+            setSelected(null);
+            localStorage.removeItem('stellarisSelectedBoard');
+        }
+    }, [empires, selected]);
 
     function getEmpireAccount(empireName) {
         const emp = empires.find(e => e.name === empireName);
@@ -274,37 +287,6 @@ function App() {
                 getEmpireAccount(a) === account.username || getEmpireAccount(b) === account.username
             )
         : [];
-
-    function handleLinkAccount(empireName, accountName) {
-        fetch('/api/empires/link', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ empireName, accountName })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                setEmpires(prev =>
-                    prev.map(e => e.name === empireName ? { ...e, account: accountName } : e)
-                );
-            }
-        });
-    }
-    function handleUnlinkAccount(empireName) {
-        fetch('/api/empires/unlink', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ empireName })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                setEmpires(prev =>
-                    prev.map(e => e.name === empireName ? { ...e, account: null } : e)
-                );
-            }
-        });
-    }
     function handleBoardSelect(pair) {
         const key = pair.join('|');
         setSelected(key);
@@ -794,12 +776,14 @@ function App() {
                                 accounts={accounts}
                             />
                         )}
-                        <TreatyList
-                            treaties={sortedTreaties}
+                        <TreatyListController
+                            treaties={treaties}
                             loaded={treatiesLoaded}
                             onView={treaty => setTreatyDialog({ open: true, mode: 'view', data: treaty })}
                             canEditTreaty={canEditTreaty}
                             onEdit={openTreatyDialog}
+                            search={treatySearch}
+                            sort={treatySort}
                         />
                     </section>
                 ) : activeTab === 'manage-empires' && showAccountsTab ? (
@@ -836,18 +820,14 @@ function App() {
                         </form>
                         {newEmpireError && <ErrorMessage>{newEmpireError}</ErrorMessage>}
                         <h3>Empires & Account Assignment</h3>
-                        <EmpireList
-                            empires={empires}
+                        <EmpireListController
                             accounts={accounts}
-                            onLink={handleLinkAccount}
-                            onUnlink={handleUnlinkAccount}
-                            onDelete={(name) => handleDeleteEmpire(
-                                name,
-                                setNewEmpireLoading,
-                                setNewEmpireError,
-                                setEmpires
-                            )}
-                            loading={newEmpireLoading}
+                            account={account}
+                            setEmpirePage={setEmpirePage}
+                            setEditEmpire={setEditEmpire}
+                            setNewEmpireLoading={setNewEmpireLoading}
+                            setNewEmpireError={setNewEmpireError}
+                            showManageActions={true}
                         />
                     </section>
                 ) : activeTab === 'accounts' && showAccountsTab ? (
@@ -897,7 +877,7 @@ function App() {
                         {accountError && <ErrorMessage>{accountError}</ErrorMessage>}
                         {accountSuccess && <LoadingMessage style={{color:'limegreen'}}>{accountSuccess}</LoadingMessage>}
                         <h3>All Accounts</h3>
-                        <AccountList
+                        <AccountListController
                             accounts={accounts}
                             onEdit={acc => {
                                 setEditAccount(acc);
@@ -1014,6 +994,7 @@ function App() {
                                     setEditEmpire={setEditEmpire}
                                     setNewEmpireLoading={setNewEmpireLoading}
                                     setNewEmpireError={setNewEmpireError}
+                                    showManageActions={false}
                                 />
                             </div>
                         </section>

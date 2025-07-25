@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TREATY_STATUS_OPTIONS } from '../utils/treatyStatusOptions';
-import ActionButton from './ActionButton';
-import ModalOverlay from './ModalOverlay';
-import FormField from './FormField';
-import { ErrorMessage } from './Messages';
-import Dropdown from './Dropdown';
-import cutOffDotter from '../utils/cutOffDotter';
+import { TREATY_STATUS_OPTIONS } from '../../utils/treatyStatusOptions';
+import ActionButton from '../ActionButton';
+import ModalOverlay from '../ModalOverlay';
+import FormField from '../FormField';
+import { ErrorMessage } from '../Messages';
+import Dropdown from '../Dropdown';
+import cutOffDotter from '../../utils/cutOffDotter';
 
 export default function TreatyDialog({ open, mode, data, onSave, onClose, error, saving, empires, accounts, account }) {
     const [form, setForm] = useState(() => data ? { ...data } : {

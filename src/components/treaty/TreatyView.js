@@ -1,8 +1,8 @@
 import React from 'react';
-import { TREATY_STATUSES } from '../utils/treatyStatuses';
-import ActionButton from './ActionButton';
-import Dialog from './Dialog';
-import StatusBadge from './StatusBadge';
+import { TREATY_STATUSES } from '../../utils/treatyStatuses';
+import ActionButton from '../ActionButton';
+import Dialog from '../Dialog';
+import StatusBadge from '../StatusBadge';
 
 export default function TreatyView({ treaty, onBack, onEdit, canEdit, canTransfer }) {
     if (!treaty) return null;

@@ -14,7 +14,8 @@ export default function EmpireList({
     account,
     setEmpirePage,
     setEditEmpire,
-    getEmpireAccount
+    getEmpireAccount,
+    showManageActions
 }) {
     return (
         <ListContainer
@@ -30,7 +31,7 @@ export default function EmpireList({
                         <div
                             key={emp.name}
                             className="empire-info-card empire-list-card"
-                            onClick={() => setEmpirePage && setEmpirePage(emp.name)}
+                            onClick={() => !showManageActions && setEmpirePage && setEmpirePage(emp.name)}
                         >
                             <h3 className="empire-info-title">
                                 {cutOffDotter.cut(emp.name, 28)}
@@ -41,44 +42,58 @@ export default function EmpireList({
                                     : <i>Unassigned</i>}
                             </div>
                             <div className="empire-actions">
-                                {setEmpirePage && (
-                                    <ActionButton
-                                        variant="primary"
-                                        className="empire-view-btn"
-                                        onClick={ev => {ev.stopPropagation(); setEmpirePage(emp.name);}}
-                                    >View</ActionButton>
+                                {!showManageActions && (
+                                    <>
+                                        {setEmpirePage && (
+                                            <ActionButton
+                                                variant="primary"
+                                                className="empire-view-btn"
+                                                onClick={ev => {ev.stopPropagation(); setEmpirePage(emp.name);}}
+                                            >View</ActionButton>
+                                        )}
+                                        {canEdit && setEditEmpire && (
+                                            <ActionButton
+                                                variant="primary"
+                                                className="empire-save-btn"
+                                                onClick={ev => {ev.stopPropagation(); setEditEmpire(emp.name);}}
+                                            >Edit</ActionButton>
+                                        )}
+                                    </>
                                 )}
-                                {canEdit && setEditEmpire && (
-                                    <ActionButton
-                                        variant="primary"
-                                        className="empire-save-btn"
-                                        onClick={ev => {ev.stopPropagation(); setEditEmpire(emp.name);}}
-                                    >Edit</ActionButton>
-                                )}
-                                {onDelete && (
-                                    <ActionButton
-                                        variant="danger"
-                                        className="account-manage-btn account-delete-btn"
-                                        onClick={ev => {ev.stopPropagation(); onDelete(emp.name);}}
-                                        disabled={loading}
-                                    >Delete</ActionButton>
-                                )}
-                                {onLink && onUnlink && (
-                                    <Dropdown
-                                        value={emp.account || ''}
-                                        onChange={e => {
-                                            const val = e.target.value;
-                                            if (val) onLink(emp.name, val);
-                                            else onUnlink(emp.name);
-                                        }}
-                                        options={Object.keys(accounts).map(accName => ({
-                                            value: accName,
-                                            label: accName
-                                        }))}
-                                        placeholder="Select account..."
-                                        className="account-select"
-                                        disabled={loading}
-                                    />
+                                {showManageActions && (
+                                    <>
+                                        {onDelete && (
+                                            <ActionButton
+                                                variant="danger"
+                                                className="account-manage-btn account-delete-btn"
+                                                onClick={ev => {ev.stopPropagation(); onDelete(emp.name);}}
+                                                disabled={loading}
+                                            >Delete</ActionButton>
+                                        )}
+                                        {onLink && onUnlink && (
+                                            <Dropdown
+                                                value={emp.account === null ? '' : emp.account}
+                                                onChange={e => {
+                                                    const val = e.target.value;
+                                                    if (val === '') {
+                                                        onUnlink(emp.name);
+                                                    } else {
+                                                        onLink(emp.name, val);
+                                                    }
+                                                }}
+                                                options={[
+                                                    { value: '', label: 'Unassigned' },
+                                                    ...Object.keys(accounts).map(accName => ({
+                                                        value: accName,
+                                                        label: accName
+                                                    }))
+                                                ]}
+                                                placeholder="Select account..."
+                                                className="account-select"
+                                                disabled={loading}
+                                            />
+                                        )}
+                                    </>
                                 )}
                             </div>
                         </div>

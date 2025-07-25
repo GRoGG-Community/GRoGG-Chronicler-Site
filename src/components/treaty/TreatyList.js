@@ -1,10 +1,10 @@
 import React from 'react';
-import { TREATY_STATUSES } from '../utils/treatyStatuses';
-import ActionButton from './ActionButton';
-import StatusBadge from './StatusBadge';
-import ListContainer from './ListContainer';
-import { EmptyMessage, LoadingMessage } from './Messages';
-import cutOffDotter from '../utils/cutOffDotter';
+import { TREATY_STATUSES } from '../../utils/treatyStatuses';
+import ActionButton from '../ActionButton';
+import StatusBadge from '../StatusBadge';
+import ListContainer from '../ListContainer';
+import { EmptyMessage, LoadingMessage } from '../Messages';
+import cutOffDotter from '../../utils/cutOffDotter';
 
 export default function TreatyList({
     treaties,

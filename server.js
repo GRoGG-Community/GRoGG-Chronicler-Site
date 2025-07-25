@@ -334,11 +334,19 @@ app.post('/api/treaties/json', (req, res) => {
     });
 });
 
-// --- Static files and SPA fallback ---
+// --- Static files ---
 app.use(express.static(path.join(__dirname, 'build')));
-app.use(express.static(PUBLIC_DIR));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+
+// --- SPA fallback (must be last, and only for non-API/non-JSON requests) ---
+app.get(/^\/(?!api\/|.*\.json$).*$/, (req, res) => {
+    const indexPath = path.join(__dirname, 'build', 'index.html');
+    fs.access(indexPath, fs.constants.F_OK, err => {
+        if (err) {
+            res.status(404).send('index.html not found');
+        } else {
+            res.sendFile(indexPath);
+        }
+    });
 });
 
 // --- Start server ---
