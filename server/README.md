@@ -1,15 +1,10 @@
-# 🚀 Welcome to your new awesome project!
+# Server
 
-This project has been created using **create-webpack-app**, you can now run
+## Usage
+1. Execute `npm install` in the server directory
+2. Use `npm run start` to run a node demon watching for changes and restarting the server if neccessary
 
-```bash
-npm run build
-```
+`npm run build` can be used to create a production build in the build/ directory
 
-or
-
-```bash
-yarn build
-```
-
-to bundle your application
+## Entry point
+The main entrypoint is [src/index.ts](src/index.ts). When changing this make sure to update [nodemon.json](nodemon.json) to call the correct file.

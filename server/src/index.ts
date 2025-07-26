@@ -1,1 +1,3 @@
-console.log("Hello This is a Typescript project.");
+import DbClient from "./DbClient";
+
+new DbClient();
