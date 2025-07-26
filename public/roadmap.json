@@ -90,6 +90,16 @@
     "description": "Track changes and actions for moderation."
   },
   {
+    "title": "Archive Campaign Framework",
+    "status": "planned",
+    "description": "GameMaster can archive entire campaign threads."
+  },
+  {
+    "title": "Scheduler",
+    "status": "planned",
+    "description": "Players can select when they are available (timestamps)."
+  },
+  {
     "title": "Role-based Access Control",
     "status": "planned",
     "description": "Support for multiple roles beyond GameMaster."
