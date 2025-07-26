@@ -2,241 +2,283 @@
   {
     "title": "Fix Deleted Empire Channels not disappearing",
     "status": "in-progress",
-    "description": "Fix the issue where deleted empire channels still appear in the UI."
+    "description": "Fix the issue where deleted empire channels still appear in the UI.",
+    "priority": 4
   },
   {
     "title": "Fix new and deleted empires not updating directly on_action",
     "status": "in-progress",
-    "description": "Fix the issue where new and deleted empires do not update the UI immediately."
+    "description": "Fix the issue where new and deleted empires do not update the UI immediately.",
+    "priority": 4
   },
   {
     "title": "Fix new and deleted accounts not updating directly on_action",
     "status": "in-progress",
-    "description": "Fix the issue where new and deleted accounts do not update the UI immediately."
+    "description": "Fix the issue where new and deleted accounts do not update the UI immediately.",
+    "priority": 3
+  },
+  {
+    "title": "Edit messages while keeping the original message as a on_hover tooltip",
+    "status": "planned",
+    "description": "Allow users to edit messages while displaying the original message as a tooltip on hover (maybe allow the GM to edit the the JSON to edit the old message tooltip).",
+    "priority": 3
   },
   {
     "title": "Scroll function on Treaty View",
     "status": "in-progress",
-    "description": "Implement a scroll function to improve navigation in the treaty view."
+    "description": "Implement a scroll function to improve navigation in the treaty view.",
+    "priority": 2
   },
   {
     "title": "Markdown Integration for Treaty Content and Empire Lore",
     "status": "in-progress",
-    "description": "Implement a markdown editor for treaty content and empire lore."
-  },
-  {
-    "title": "Diplomatic Message Boards",
-    "status": "completed",
-    "description": "Core feature for empire-to-empire communication."
-  },
-  {
-    "title": "Fix Roadmap JSON Editing",
-    "status": "completed",
-    "description": "Currently not saving to deployed files."
-  },
-  {
-    "title": "Empire Management",
-    "status": "completed",
-    "description": "Add, edit, and assign accounts to empires."
-  },
-  {
-    "title": "Account Management",
-    "status": "completed",
-    "description": "Create, edit, and delete user accounts. GameMaster controls."
-  },
-  {
-    "title": "Empire Lore & Stats Editor",
-    "status": "completed",
-    "description": "Allow empires to edit and display lore, stats, ethics, civics, and special info."
-  },
-  {
-    "title": "Treaties & Agreements System",
-    "status": "completed",
-    "description": "Create, edit, and manage treaties between empires."
-  },
-  {
-    "title": "Treaty Participants Dropdown",
-    "status": "completed",
-    "description": "Improved UI for selecting treaty participants."
-  },
-  {
-    "title": "Treaty Ownership Transfer",
-    "status": "completed",
-    "description": "GameMaster can transfer treaty ownership between accounts."
-  },
-  {
-    "title": "Treaty Search & Sort",
-    "status": "completed",
-    "description": "Search and sort treaties by title, owner, or participants."
+    "description": "Implement a markdown editor for treaty content and empire lore.",
+    "priority": 2
   },
   {
     "title": "Permissions System",
     "status": "in-progress",
-    "description": "Granular GameMaster permissions for moderation and management."
-  },
-  {
-    "title": "Channel Message Deletion (GM)",
-    "status": "completed",
-    "description": "GameMaster can delete messages from diplomatic channels."
-  },
-  {
-    "title": "Bulk Message Deletion (GM)",
-    "status": "planned",
-    "description": "GameMaster can delete multiple messages at once."
-  },
-  {
-    "title": "Audit Log",
-    "status": "planned",
-    "description": "Track changes and actions for moderation."
-  },
-  {
-    "title": "Archive Campaign Framework",
-    "status": "planned",
-    "description": "GameMaster can archive entire campaign threads."
-  },
-  {
-    "title": "Scheduler",
-    "status": "planned",
-    "description": "Players can select when they are available (timestamps)."
-  },
-  {
-    "title": "Role-based Access Control",
-    "status": "planned",
-    "description": "Support for multiple roles beyond GameMaster."
-  },
-  {
-    "title": "UI Fixes & Improvements",
-    "status": "planned",
-    "description": "Fixing UI bugs and improving overall user experience."
-  },
-  {
-    "title": "Empire Search & Sort",
-    "status": "completed",
-    "description": "Search and sort empires and treaties for easier navigation."
-  },
-  {
-    "title": "Mobile Responsiveness",
-    "status": "in-progress",
-    "description": "Improve UI for mobile and tablet devices."
-  },
-  {
-    "title": "Responsive UI Improvements",
-    "status": "in-progress",
-    "description": "Enhance layout and usability on mobile and tablet devices."
-  },
-  {
-    "title": "Light Mode",
-    "status": "planned",
-    "description": "Add a toggle for dark/light theme."
-  },
-  {
-    "title": "Empire Color Customization",
-    "status": "planned",
-    "description": "Let empires pick a color for their cards and messages."
-  },
-  {
-    "title": "Empire Flags & Icons",
-    "status": "planned",
-    "description": "Allow empires to upload and display custom flags or icons."
-  },
-  {
-    "title": "Notifications",
-    "status": "planned",
-    "description": "Notify users of new messages, treaties, or changes."
-  },
-  {
-    "title": "Treaty Expiry Function",
-    "status": "planned",
-    "description": "Functions for users to see when treaties are expiring."
-  },
-  {
-    "title": "Treaty Export/Import",
-    "status": "planned",
-    "description": "Allow treaties to be exported/imported as JSON for backup or transfer."
-  },
-  {
-    "title": "Empire Info Export",
-    "status": "planned",
-    "description": "Export empire lore and stats for sharing or backup."
-  },
-  {
-    "title": "Quick Search Everywhere",
-    "status": "planned",
-    "description": "Add instant search bars to all major lists and panels."
-  },
-  {
-    "title": "Pinned Empires",
-    "status": "planned",
-    "description": "Allow users to pin favorite empires for quick access."
-  },
-  {
-    "title": "Channel Pinning",
-    "status": "planned",
-    "description": "Allow users to pin favorite diplomatic channels."
-  },
-  {
-    "title": "Archiving",
-    "status": "planned",
-    "description": "Archive old diplomatic channels, treaties, etc. for reference."
-  },
-  {
-    "title": "Treaty Change History",
-    "status": "planned",
-    "description": "Show a history of edits and status changes for treaties."
-  },
-  {
-    "title": "Treaty Templates",
-    "status": "planned",
-    "description": "Provide templates for common treaty types."
-  },
-  {
-    "title": "Empire Assignment to Accounts",
-    "status": "completed",
-    "description": "GameMaster can assign or unassign empires to accounts."
-  },
-  {
-    "title": "Empire Merge/Split",
-    "status": "planned",
-    "description": "Tools for merging or splitting empires and their data."
-  },
-  {
-    "title": "Organization/Federation Channels",
-    "status": "planned",
-    "description": "Add support for channels dedicated to organizations, federations, or alliances."
-  },
-  {
-    "title": "Organizations & Federations Tab",
-    "status": "planned",
-    "description": "Introduce a new tab for managing and viewing organizations, federations, and alliances."
-  },
-  {
-    "title": "Personalized Message Templates",
-    "status": "planned",
-    "description": "Selfmade templates for messages."
-  },
-  {
-    "title": "Empire Tab assign Empire to organization",
-    "status": "planned",
-    "description": "Allow empires to be assigned to organizations or federations."
+    "description": "Granular GameMaster permissions for moderation and management.",
+    "priority": 2
   },
   {
     "title": "Edit JSON files directly from the page",
     "status": "in-progress",
-    "description": "Edit JSON files in place without having to go directly into the files."
+    "description": "Edit JSON files in place without having to go directly into the files.",
+    "priority": 2
+  },
+  {
+    "title": "Scheduler",
+    "status": "planned",
+    "description": "Players can select when they are available (timestamps).",
+    "priority": 3
+  },
+  {
+    "title": "Bulk Message Deletion (GM)",
+    "status": "planned",
+    "description": "GameMaster can delete multiple messages at once.",
+    "priority": 2
+  },
+  {
+    "title": "Audit Log",
+    "status": "planned",
+    "description": "Track changes and actions for moderation.",
+    "priority": 2
+  },
+  {
+    "title": "Archive Campaign Framework",
+    "status": "planned",
+    "description": "GameMaster can archive entire campaign threads.",
+    "priority": 1
+  },
+  {
+    "title": "Role-based Access Control",
+    "status": "planned",
+    "description": "Support for multiple roles beyond GameMaster.",
+    "priority": 1
+  },
+  {
+    "title": "UI Fixes & Improvements",
+    "status": "planned",
+    "description": "Fixing UI bugs and improving overall user experience.",
+    "priority": 1
+  },
+  {
+    "title": "Light Mode",
+    "status": "planned",
+    "description": "Add a toggle for dark/light theme.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Color Customization",
+    "status": "planned",
+    "description": "Let empires pick a color for their cards and messages.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Flags & Icons",
+    "status": "planned",
+    "description": "Allow empires to upload and display custom flags or icons.",
+    "priority": 0
+  },
+  {
+    "title": "Notifications",
+    "status": "planned",
+    "description": "Notify users of new messages, treaties, or changes.",
+    "priority": 1
+  },
+  {
+    "title": "Treaty Expiry Function",
+    "status": "planned",
+    "description": "Functions for users to see when treaties are expiring.",
+    "priority": 1
+  },
+  {
+    "title": "Treaty Export/Import",
+    "status": "planned",
+    "description": "Allow treaties to be exported/imported as JSON for backup or transfer.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Info Export",
+    "status": "planned",
+    "description": "Export empire lore and stats for sharing or backup.",
+    "priority": 0
+  },
+  {
+    "title": "Quick Search Everywhere",
+    "status": "planned",
+    "description": "Add instant search bars to all major lists and panels.",
+    "priority": 0
+  },
+  {
+    "title": "Pinned Empires",
+    "status": "planned",
+    "description": "Allow users to pin favorite empires for quick access.",
+    "priority": 0
+  },
+  {
+    "title": "Channel Pinning",
+    "status": "planned",
+    "description": "Allow users to pin favorite diplomatic channels.",
+    "priority": 0
+  },
+  {
+    "title": "Archiving",
+    "status": "planned",
+    "description": "Archive old diplomatic channels, treaties, etc. for reference.",
+    "priority": 0
+  },
+  {
+    "title": "Treaty Change History",
+    "status": "planned",
+    "description": "Show a history of edits and status changes for treaties.",
+    "priority": 0
+  },
+  {
+    "title": "Treaty Templates",
+    "status": "planned",
+    "description": "Provide templates for common treaty types.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Merge/Split",
+    "status": "planned",
+    "description": "Tools for merging or splitting empires and their data.",
+    "priority": 0
+  },
+  {
+    "title": "Organization/Federation Channels",
+    "status": "planned",
+    "description": "Add support for channels dedicated to organizations, federations, or alliances.",
+    "priority": 0
+  },
+  {
+    "title": "Organizations & Federations Tab",
+    "status": "planned",
+    "description": "Introduce a new tab for managing and viewing organizations, federations, and alliances.",
+    "priority": 0
+  },
+  {
+    "title": "Personalized Message Templates",
+    "status": "planned",
+    "description": "Selfmade templates for messages.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Tab assign Empire to organization",
+    "status": "planned",
+    "description": "Allow empires to be assigned to organizations or federations.",
+    "priority": 0
   },
   {
     "title": "Treaty Status Colors",
     "status": "planned",
-    "description": "Color-code treaty statuses for better visibility."
+    "description": "Color-code treaty statuses for better visibility.",
+    "priority": 0
   },
   {
     "title": "UI2",
     "status": "planned",
-    "description": "Rework of the UI."
+    "description": "Rework of the UI.",
+    "priority": 0
   },
   {
     "title": "Security Updates",
     "status": "planned",
-    "description": "Enhance security measures and fix vulnerabilities. Such as, moving away from JSON, securing login data, etc."
+    "description": "Enhance security measures and fix vulnerabilities. Such as, moving away from JSON, securing login data, etc.",
+    "priority": 0
+  },
+  {
+    "title": "Diplomatic Message Boards",
+    "status": "completed",
+    "description": "Core feature for empire-to-empire communication.",
+    "priority": 0
+  },
+  {
+    "title": "Fix Roadmap JSON Editing",
+    "status": "completed",
+    "description": "Currently not saving to deployed files.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Management",
+    "status": "completed",
+    "description": "Add, edit, and assign accounts to empires.",
+    "priority": 0
+  },
+  {
+    "title": "Account Management",
+    "status": "completed",
+    "description": "Create, edit, and delete user accounts. GameMaster controls.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Lore & Stats Editor",
+    "status": "completed",
+    "description": "Allow empires to edit and display lore, stats, ethics, civics, and special info.",
+    "priority": 0
+  },
+  {
+    "title": "Treaties & Agreements System",
+    "status": "completed",
+    "description": "Create, edit, and manage treaties between empires.",
+    "priority": 0
+  },
+  {
+    "title": "Treaty Participants Dropdown",
+    "status": "completed",
+    "description": "Improved UI for selecting treaty participants.",
+    "priority": 0
+  },
+  {
+    "title": "Treaty Ownership Transfer",
+    "status": "completed",
+    "description": "GameMaster can transfer treaty ownership between accounts.",
+    "priority": 0
+  },
+  {
+    "title": "Treaty Search & Sort",
+    "status": "completed",
+    "description": "Search and sort treaties by title, owner, or participants.",
+    "priority": 0
+  },
+  {
+    "title": "Channel Message Deletion (GM)",
+    "status": "completed",
+    "description": "GameMaster can delete messages from diplomatic channels.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Search & Sort",
+    "status": "completed",
+    "description": "Search and sort empires and treaties for easier navigation.",
+    "priority": 0
+  },
+  {
+    "title": "Empire Assignment to Accounts",
+    "status": "completed",
+    "description": "GameMaster can assign or unassign empires to accounts.",
+    "priority": 0
   }
 ]

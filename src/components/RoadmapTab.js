@@ -34,13 +34,21 @@ export default function RoadmapTab({ onClose, account }) {
         fetchRoadmap();
     }, []);
 
-    const filtered = roadmap.filter(item => {
-        const matchesTab = activeTab === 'all' || item.status === activeTab;
-        const matchesSearch = !search.trim() ||
-            item.title.toLowerCase().includes(search.toLowerCase()) ||
-            item.description.toLowerCase().includes(search.toLowerCase());
-        return matchesTab && matchesSearch;
-    });
+    const filtered = [...roadmap]
+        .filter(item => {
+            const matchesTab = activeTab === 'all' || item.status === activeTab;
+            const matchesSearch = !search.trim() ||
+                item.title.toLowerCase().includes(search.toLowerCase()) ||
+                item.description.toLowerCase().includes(search.toLowerCase());
+            return matchesTab && matchesSearch;
+        })
+        .sort((a, b) => {
+            const pa = typeof a.priority === 'number' ? a.priority : 0;
+            const pb = typeof b.priority === 'number' ? b.priority : 0;
+            if (pb !== pa) return pb - pa;
+            const statusOrder = { 'in-progress': 2, planned: 1, completed: 0 };
+            return (statusOrder[b.status] || 0) - (statusOrder[a.status] || 0);
+        });
 
     function openEditor() {
         setEditorText(JSON.stringify(roadmap, null, 2));
@@ -51,7 +59,7 @@ export default function RoadmapTab({ onClose, account }) {
         setShowEditor(false);
         setEditorError('');
         setEditorSaving(false);
-        fetchRoadmap(); // <-- Always reload after closing editor
+        fetchRoadmap(); 
     }
     function handleEditorChange(e) {
         setEditorText(e.target.value);
@@ -148,6 +156,14 @@ export default function RoadmapTab({ onClose, account }) {
                                 <span className={`roadmap-status roadmap-status-${item.status}`}>
                                     <StatusBadge status={item.status} />
                                 </span>
+                            </div>
+                            <div className="roadmap-priority" style={{
+                                margin: '0.3em 0 0.3em 0',
+                                fontWeight: 'bold',
+                                color: '#ffb300',
+                                fontSize: '0.95em'
+                            }}>
+                                Priority: {typeof item.priority === 'number' ? item.priority : 0}
                             </div>
                             <div className="roadmap-desc">{item.description}</div>
                         </li>
