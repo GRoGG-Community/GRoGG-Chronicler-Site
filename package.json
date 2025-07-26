@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "react-scripts start --host 0.0.0.0",
-    "build": "react-scripts build"
+    "start": "concurrently \"npm run start:json\" \"npm run start:web\"",
+    "build": "react-scripts build",
+    "start:json": "npx json-server -p 3001 --routes routes.json db.json",
+    "start:web": "react-scripts start --host 0.0.0.0"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
@@ -14,6 +16,8 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "concurrently": "^9.2.0",
+    "json-server": "^0.17.4",
     "react-scripts": "^5.0.1"
   },
   "browserslist": {
@@ -27,5 +31,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+   "proxy": "http://localhost:3001"
 }
