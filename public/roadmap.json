@@ -71,6 +71,12 @@
     "description": "Track changes and actions for moderation.",
     "priority": 2
   },
+    {
+    "title": "Timeline",
+    "status": "planned",
+    "description": "Add a timeline view for (galactic) events and situations.",
+    "priority": 2
+  },
   {
     "title": "Archive Campaign Framework",
     "status": "planned",
