@@ -60,6 +60,12 @@
     "priority": 2
   },
   {
+    "title": "Highlight changes in original message view",
+    "status": "in-progress",
+    "description": "Highlight changes made to the original message in the view.",
+    "priority": 2
+  },
+  {
     "title": "Bulk Message Deletion (GM)",
     "status": "planned",
     "description": "GameMaster can delete multiple messages at once.",
