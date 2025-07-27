@@ -45,6 +45,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
+    max-height: 28em; 
+    overflow-y: auto;
 }
 
 .boards-list-item {
@@ -130,7 +132,7 @@
 .messages-panel {
     display: flex;
     flex-direction: column;
-    height: 420px;
+    height: 600px; 
     position: relative;
     background: var(--primary-bg);
     border-radius: 8px;
@@ -160,7 +162,7 @@
     color: var(--text);
     box-shadow: 0 1px 2px rgba(0,0,0,0.07);
     display: flex;
-    flex-direction: row; /* changed from column to row */
+    flex-direction: row; 
     align-items: stretch;
     border: none;
     gap: 0.1rem;
@@ -303,7 +305,6 @@
     }
 }
 
-/* New: Channels screen header for logout button */
 .channels-header {
     display: flex;
     justify-content: flex-end;
@@ -312,16 +313,15 @@
     margin-bottom: 1.5rem;
 }
 
-/* New: Main area for boards/channels and text channel side by side */
 .channels-main {
     display: flex;
     flex-direction: row;
     gap: 2rem;
     align-items: flex-start;
     width: 100%;
+    min-height: 36em; /* was 28em, now matches increased chat panel height */
 }
 
-/* Boards/channels list on the left */
 .channels-sidebar {
     flex: 0 0 320px;
     min-width: 220px;
@@ -330,15 +330,16 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-height: 36em;
 }
 
-/* Text channel area on the right */
 .channels-content {
     flex: 1 1 0;
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-height: 36em;
 }
 
 /* Responsive adjustments */

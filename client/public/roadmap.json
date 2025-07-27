@@ -1,5 +1,17 @@
 [
   {
+    "title": "Dissecting the App.js and creating multiple new components and utility functions for better maintainability",
+    "status": "in-progress",
+    "description": "Dissecting the App.js file to create multiple new components and utility functions for better maintainability.",
+    "priority": 4
+  },
+  {
+    "title": "Sort out the CSS files and make them more maintainable",
+    "status": "in-progress",
+    "description": "Refactor the CSS files to improve maintainability and organization. Har har har I'm going crazy. Why did I have to skip web-tech?",
+    "priority": 4
+  },
+  {
     "title": "Fix Deleted Empire Channels not disappearing",
     "status": "in-progress",
     "description": "Fix the issue where deleted empire channels still appear in the UI.",
@@ -19,20 +31,26 @@
   },
   {
     "title": "Edit messages while keeping the original message as a on_hover tooltip",
-    "status": "planned",
+    "status": "completed",
     "description": "Allow users to edit messages while displaying the original message as a tooltip on hover (maybe allow the GM to edit the the JSON to edit the old message tooltip).",
+    "priority": 3
+  },
+  {
+    "title": "Markdown Integration for Treaty Content and Empire Lore",
+    "status": "in-progress",
+    "description": "Implement a markdown editor for treaty content and empire lore.",
+    "priority": 3
+  },
+  {
+    "title": "Implement a proper message window for easier texting and proper markdown usage.",
+    "status": "in-progress",
+    "description": "Create a dedicated message window that supports markdown formatting and provides a better user experience for text input.",
     "priority": 3
   },
   {
     "title": "Scroll function on Treaty View",
     "status": "in-progress",
     "description": "Implement a scroll function to improve navigation in the treaty view.",
-    "priority": 2
-  },
-  {
-    "title": "Markdown Integration for Treaty Content and Empire Lore",
-    "status": "in-progress",
-    "description": "Implement a markdown editor for treaty content and empire lore.",
     "priority": 2
   },
   {
@@ -54,15 +72,39 @@
     "priority": 3
   },
   {
+    "title": "News Ticker",
+    "status": "in-progress",
+    "description": "A news ticker for galactic news.",
+    "priority": 2
+  },
+  {
+    "title": "Highlight changes in original message view",
+    "status": "in-progress",
+    "description": "Highlight changes made to the original message in the view. -> as colored text",
+    "priority": 2
+  },
+  {
     "title": "Bulk Message Deletion (GM)",
     "status": "planned",
     "description": "GameMaster can delete multiple messages at once.",
+    "priority": 2
+  },
+   {
+    "title": "Upload and internal sharing of Session Maps and Savegames",
+    "status": "planned",
+    "description": "GameMaster can upload and share session maps and savegames for all players.",
     "priority": 2
   },
   {
     "title": "Audit Log",
     "status": "planned",
     "description": "Track changes and actions for moderation.",
+    "priority": 2
+  },
+    {
+    "title": "Timeline",
+    "status": "planned",
+    "description": "Add a timeline view for (galactic) events and situations.",
     "priority": 2
   },
   {

@@ -18,7 +18,7 @@ const VARIANT_STYLES = {
 export default function ActionButton({
     children,
     onClick,
-    type = 'button',
+    type = 'button', 
     className = '',
     disabled = false,
     style = {},
@@ -39,3 +39,19 @@ export default function ActionButton({
         </button>
     );
 }
+
+export const actionBtnStyle = {
+    minWidth: '90px',
+    height: '2.2rem',
+    padding: '0.3rem 1.1rem',
+    fontSize: '1em',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    border: 'none',
+    transition: 'background 0.2s',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    verticalAlign: 'middle',
+    marginRight: '0.5rem'
+};

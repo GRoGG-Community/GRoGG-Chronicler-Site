@@ -9,8 +9,15 @@
     "start:web": "react-scripts start --host 0.0.0.0"
   },
   "dependencies": {
+    "body-parser": "^2.2.0",
+    "dompurify": "^3.2.6",
+    "express": "^5.1.0",
+    "marked": "^16.1.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "sqlite3": "^5.1.7",
   },
   "devDependencies": {
     "concurrently": "^9.2.0",
@@ -29,5 +36,5 @@
       "last 1 safari version"
     ]
   },
-   "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001"
 }

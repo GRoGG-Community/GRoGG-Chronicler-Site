@@ -6,6 +6,7 @@ import FormField from '../FormField';
 import { ErrorMessage } from '../Messages';
 import Dropdown from '../Dropdown';
 import cutOffDotter from '../../utils/cutOffDotter';
+import MarkdownRenderer from '../MarkdownRenderer';
 
 export default function TreatyDialog({ open, mode, data, onSave, onClose, error, saving, empires, accounts, account }) {
     const [form, setForm] = useState(() => data ? { ...data } : {
@@ -336,6 +337,9 @@ export default function TreatyDialog({ open, mode, data, onSave, onClose, error,
                             marginRight: 0
                         }}
                     />
+                    <div style={{marginTop:'0.7em', background:'var(--primary-bg)', borderRadius:8, border:'1px solid var(--border)', padding:'0.7em 1em'}}>
+                        <MarkdownRenderer markdown={form.content} />
+                    </div>
                 </div>
                 {error && <ErrorMessage>{error}</ErrorMessage>}
                 <div className="treaty-form-actions">

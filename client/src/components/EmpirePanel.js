@@ -1,6 +1,7 @@
 import React from 'react';
 import ActionButton from './ActionButton';
 import Card from './Card';
+import MarkdownRenderer from './MarkdownRenderer';
 
 export default function EmpirePanel({ name, canEdit, empireInfo, getEmpireAccount, setEmpirePage, setEditEmpire }) {
     const info = empireInfo[name] || {};
@@ -11,7 +12,12 @@ export default function EmpirePanel({ name, canEdit, empireInfo, getEmpireAccoun
                 Owner: <span>{getEmpireAccount(name) || <i>Unassigned</i>}</span>
             </div>
             <div className="empire-info-details">
-                <div><b>Lore:</b> <div className="empire-info-field">{info.lore || <i>No lore set.</i>}</div></div>
+                <div>
+                    <b>Lore:</b>
+                    <div className="empire-info-field">
+                        <MarkdownRenderer markdown={info.lore || ''} />
+                    </div>
+                </div>
                 <div><b>Stats:</b> <div className="empire-info-field">{info.stats || <i>No stats set.</i>}</div></div>
                 <div><b>Ethics:</b> <div className="empire-info-field">{info.ethics || <i>No ethics set.</i>}</div></div>
                 <div><b>Civics:</b> <div className="empire-info-field">{info.civics || <i>No civics set.</i>}</div></div>

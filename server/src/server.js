@@ -20,6 +20,18 @@ const DATA_FILE = path.join(__dirname, 'messages.json');
 const ROADMAP_FILE = path.join(PUBLIC_DIR, 'roadmap.json');
 const ROADMAP_BUILD_FILE = path.join(__dirname, 'build', 'roadmap.json');
 
+// --- Ensure JSON files exist ---
+function ensureJsonFile(file, defaultValue) {
+    if (!fs.existsSync(file)) {
+        fs.writeFileSync(file, JSON.stringify(defaultValue, null, 2), 'utf8');
+    }
+}
+ensureJsonFile(EMPIRE_INFO_FILE, {});
+ensureJsonFile(ACCOUNTS_FILE, { GameMaster: "stellaris" });
+ensureJsonFile(EMPIRES_FILE, []);
+ensureJsonFile(TREATIES_FILE, []);
+ensureJsonFile(DATA_FILE, []); 
+
 // --- Helper: Load/Save JSON ---
 function loadJson(file, fallback) {
     try {
@@ -41,8 +53,19 @@ db.serialize(() => {
         author TEXT,
         text TEXT,
         timestamp INTEGER,
-        deleted INTEGER DEFAULT 0
+        deleted INTEGER DEFAULT 0,
+        originalText TEXT
     )`);
+    // Migration: add originalText if missing
+    db.get("PRAGMA table_info(messages)", (err, row) => {
+        if (!err) {
+            db.all("PRAGMA table_info(messages)", (err2, columns) => {
+                if (!columns.some(col => col.name === "originalText")) {
+                    db.run("ALTER TABLE messages ADD COLUMN originalText TEXT");
+                }
+            });
+        }
+    });
 });
 
 // --- API: GET messages for a board ---
@@ -50,7 +73,7 @@ app.get('/api/messages', (req, res) => {
     const board = req.query.board;
     if (!board) return res.status(400).json([]);
     db.all(
-        'SELECT author, text, timestamp, deleted FROM messages WHERE board = ? ORDER BY timestamp ASC',
+        'SELECT author, text, timestamp, deleted, originalText FROM messages WHERE board = ? ORDER BY timestamp ASC',
         [board],
         (err, rows) => {
             if (err) return res.status(500).json([]);
@@ -58,7 +81,8 @@ app.get('/api/messages', (req, res) => {
                 author: r.author,
                 text: r.text,
                 timestamp: r.timestamp,
-                deleted: !!r.deleted
+                deleted: !!r.deleted,
+                originalText: r.originalText
             })));
         }
     );
@@ -69,7 +93,7 @@ app.post('/api/messages', (req, res) => {
     const { board, author, text, timestamp } = req.body;
     if (!board || !author || !text) return res.status(400).json({ error: 'Missing fields' });
     db.run(
-        'INSERT INTO messages (board, author, text, timestamp, deleted) VALUES (?, ?, ?, ?, 0)',
+        'INSERT INTO messages (board, author, text, timestamp, deleted, originalText) VALUES (?, ?, ?, ?, 0, NULL)',
         [board, author, text, timestamp || Date.now()],
         function (err) {
             if (err) return res.status(500).json({ error: 'Failed to save message' });
@@ -100,6 +124,47 @@ app.post('/api/messages/delete', (req, res) => {
                     res.json({ success: true });
                 }
             );
+        }
+    );
+});
+
+// --- API: Edit a message (author or GM) ---
+app.post('/api/messages/edit', (req, res) => {
+    const { board, index, newText, editor, editOriginal } = req.body;
+    if (typeof board !== 'string' || typeof index !== 'number' || typeof newText !== 'string' || typeof editor !== 'string') {
+        return res.status(400).json({ error: 'Missing fields' });
+    }
+    db.all(
+        'SELECT * FROM messages WHERE board = ? ORDER BY timestamp ASC',
+        [board],
+        (err, rows) => {
+            if (err || !rows || index < 0 || index >= rows.length) {
+                return res.status(404).json({ error: 'Message not found' });
+            }
+            const msg = rows[index];
+            if (editor !== msg.author && editor !== "GameMaster") {
+                return res.status(403).json({ error: 'Not allowed' });
+            }
+            if (editOriginal && editor === "GameMaster") {
+                db.run(
+                    'UPDATE messages SET originalText = ? WHERE id = ?',
+                    [newText, msg.id],
+                    function (err2) {
+                        if (err2) return res.status(500).json({ error: 'Failed to edit original message tooltip' });
+                        res.json({ success: true });
+                    }
+                );
+            } else {
+                const orig = msg.originalText || msg.text;
+                db.run(
+                    'UPDATE messages SET text = ?, originalText = ? WHERE id = ?',
+                    [newText, orig, msg.id],
+                    function (err2) {
+                        if (err2) return res.status(500).json({ error: 'Failed to edit message' });
+                        res.json({ success: true });
+                    }
+                );
+            }
         }
     );
 });

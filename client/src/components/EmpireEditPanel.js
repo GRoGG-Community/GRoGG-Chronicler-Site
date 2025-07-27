@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ActionButton from './ActionButton';
 import FormField from './FormField';
 import Card from './Card';
+import MarkdownRenderer from './MarkdownRenderer';
 
 export default function EmpireEditPanel({ name, onCancel, empireInfo, saveEmpireInfo }) {
     const info = empireInfo[name] || {};
@@ -28,6 +29,9 @@ export default function EmpireEditPanel({ name, onCancel, empireInfo, saveEmpire
                     onChange={handleChange}
                     rows={3}
                 />
+                <div style={{marginTop:'0.7em', background:'var(--primary-bg)', borderRadius:8, border:'1px solid var(--border)', padding:'0.7em 1em'}}>
+                    <MarkdownRenderer markdown={edit.lore || ''} />
+                </div>
                 <FormField
                     label="Stats:"
                     name="stats"
@@ -52,7 +56,7 @@ export default function EmpireEditPanel({ name, onCancel, empireInfo, saveEmpire
                     value={edit.special || ''}
                     onChange={handleChange}
                 />
-                <div style={{display: 'flex', gap: '1rem', marginTop: '1rem'}}>
+                <div className="actions-row">
                     <ActionButton type="submit" variant="primary" className="empire-save-btn">Save</ActionButton>
                     <ActionButton type="button" variant="secondary" className="empire-back-btn" onClick={onCancel}>Cancel</ActionButton>
                 </div>
