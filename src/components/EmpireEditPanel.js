@@ -52,7 +52,7 @@ export default function EmpireEditPanel({ name, onCancel, empireInfo, saveEmpire
                     value={edit.special || ''}
                     onChange={handleChange}
                 />
-                <div style={{display: 'flex', gap: '1rem', marginTop: '1rem'}}>
+                <div className="actions-row">
                     <ActionButton type="submit" variant="primary" className="empire-save-btn">Save</ActionButton>
                     <ActionButton type="button" variant="secondary" className="empire-back-btn" onClick={onCancel}>Cancel</ActionButton>
                 </div>

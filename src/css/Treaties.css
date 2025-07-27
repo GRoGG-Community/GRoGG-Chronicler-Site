@@ -491,7 +491,6 @@
     user-select: none;
 }
 
-/* .participants-dropdown-item styles for dropdown rows */
 .participants-dropdown-item {
     background: none;
     border: none;
@@ -518,7 +517,6 @@
     position: absolute;
     left: 0;
     right: 0;
-    /* Ensure dropdown is always below the button and never overlays it */
     top: calc(100% + 8px);
     z-index: 1001;
     background: var(--card-bg);
@@ -529,7 +527,6 @@
     box-shadow: 0 2px 12px #0004;
     max-height: 220px;
     overflow-y: auto;
-    /* Prevent pointer events on parent from closing dropdown when clicking inside */
     pointer-events: auto;
 }
 
@@ -584,7 +581,6 @@
     margin-left: 0.5rem;
 }
 
-/* Add this to fix account dropdown text cutoff in Manage Empires */
 .account-select {
     min-width: 160px;
     max-width: 100%;

@@ -228,7 +228,6 @@ button:hover:not(:disabled) {
     border-radius: 8px;
 }
 
-/* Utility for horizontal button alignment */
 .actions-row {
     display: flex;
     gap: 1rem;
@@ -239,7 +238,6 @@ button:hover:not(:disabled) {
     margin-bottom: 0;
 }
 
-/* Align actions in lists */
 .empires-list, .accounts-list, .treaties-list {
     width: 100%;
 }
@@ -456,4 +454,55 @@ button:hover:not(:disabled) {
     background: var(--primary-bg);
     margin-left: 0.2em;
     margin-right: 0.2em;
+}
+
+.message-edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.message-edit-form .actions-row,
+.message-edit-form .edit-actions,
+.message-edit-form .edit-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+.message-edit-form .send-btn,
+.message-edit-form .empire-back-btn {
+    min-width: 90px;
+    height: 2.2rem;
+    padding: 0.3rem 1.1rem;
+    font-size: 1em;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-right: 0;
+}
+
+.message-edit-form .empire-back-btn {
+    background: #555;
+    color: #fff;
+    margin-top: 0;
+}
+
+.message-edit-form .send-btn:hover {
+    background: #0090c0;
+}
+
+.message-edit-form .empire-back-btn:hover {
+    background: #888;
 }

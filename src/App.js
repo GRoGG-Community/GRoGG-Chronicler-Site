@@ -30,6 +30,7 @@ import cutOffDotter from './utils/cutOffDotter';
 import EmpireListController from './components/empire/EmpireListController';
 import TreatyListController from './components/treaty/TreatyListController';
 import AccountListController from './components/account/AccountListController';
+import ActionButton, { actionBtnStyle } from './components/ActionButton';
 
 function App() {
     const [empires, setEmpires] = useState([]);
@@ -342,18 +343,6 @@ function App() {
         };
     }, [selected, activeTab, editEmpire, empirePage]);
 
-    const prevMessagesLengthRef = useRef(0);
-    useEffect(() => {
-        if (!selected) return;
-        const currentMessages = messages[selected] || [];
-        if (currentMessages.length !== prevMessagesLengthRef.current) {
-            if (messagesEndRef.current) {
-                messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
-            }
-            prevMessagesLengthRef.current = currentMessages.length;
-        }
-    }, [messages, selected]);
-
     function postMessage(e) {
         e.preventDefault();
         if (!selected || !account || !text.trim()) return;
@@ -378,6 +367,11 @@ function App() {
                         ...prev,
                         [key]: data
                     }));
+                    setTimeout(() => {
+                        if (messagesEndRef.current) {
+                            messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
+                        }
+                    }, 0);
                 });
         });
         setText('');
@@ -590,6 +584,62 @@ function App() {
         if (empireSort === 'name') return a.localeCompare(b);
         return 0;
     });
+
+    const [editMsgIdx, setEditMsgIdx] = useState(null);
+    const [editMsgText, setEditMsgText] = useState('');
+    const [editMsgOriginal, setEditMsgOriginal] = useState(false);
+
+    function handleEditMessage(boardKey, idx, currentText) {
+        setEditMsgIdx(idx);
+        setEditMsgText(currentText);
+        setEditMsgOriginal(false);
+    }
+    function handleEditOriginalTooltip(boardKey, idx, originalText) {
+        setEditMsgIdx(idx);
+        setEditMsgText(originalText);
+        setEditMsgOriginal(true);
+    }
+    function handleEditMsgSubmit(e) {
+        e.preventDefault();
+        if (!selected || editMsgIdx === null || !account) return;
+        fetch('/api/messages/edit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                board: selected,
+                index: editMsgIdx,
+                newText: editMsgText,
+                editor: account.username,
+                editOriginal: editMsgOriginal
+            })
+        })
+        .then(res => res.json())
+        .then(() => {
+            fetch(`/api/messages?board=${encodeURIComponent(selected)}`)
+                .then(res => res.json())
+                .then(data => {
+                    setMessages(prev => ({
+                        ...prev,
+                        [selected]: data
+                    }));
+                });
+            setEditMsgIdx(null);
+            setEditMsgText('');
+            setEditMsgOriginal(false);
+        });
+    }
+    function handleEditMsgCancel() {
+        setEditMsgIdx(null);
+        setEditMsgText('');
+        setEditMsgOriginal(false);
+    }
+
+    // Scroll to bottom when switching channel or tab to 'channels'
+    useEffect(() => {
+        if (activeTab === 'channels' && selected && messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
+        }
+    }, [selected, activeTab]);
 
     if (!account) {
         return (
@@ -1087,8 +1137,90 @@ function App() {
                                                                     account={account}
                                                                     gmPermissions={gmPermissions}
                                                                     handleDeleteMessage={handleDeleteMessage}
+                                                                    handleEditMessage={handleEditMessage}
+                                                                    handleEditOriginalTooltip={handleEditOriginalTooltip}
+                                                                    messagesEndRef={messagesEndRef}
                                                                 />
                                                             </div>
+                                                            {editMsgIdx !== null && (
+                                                                <div
+                                                                    className="modal-overlay"
+                                                                    style={{
+                                                                        zIndex: 3000,
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center'
+                                                                    }}
+                                                                    onClick={handleEditMsgCancel}
+                                                                >
+                                                                    <div
+                                                                        className="modal-content"
+                                                                        style={{
+                                                                            maxWidth: 520,
+                                                                            width: '98vw',
+                                                                            background: 'var(--card-bg)',
+                                                                            borderRadius: '14px',
+                                                                            boxShadow: '0 4px 32px #0008',
+                                                                            border: '2px solid var(--accent)',
+                                                                            padding: '2rem 2rem',
+                                                                            display: 'flex',
+                                                                            flexDirection: 'column',
+                                                                            gap: '1.2rem',
+                                                                            color: 'var(--text)'
+                                                                        }}
+                                                                        onClick={e => e.stopPropagation()}
+                                                                    >
+                                                                        <form
+                                                                            onSubmit={handleEditMsgSubmit}
+                                                                            className="message-edit-form"
+                                                                        >
+                                                                            <label style={{
+                                                                                fontWeight: 'bold',
+                                                                                color: 'var(--accent)',
+                                                                                fontSize: '1.05em',
+                                                                                marginBottom: '0.2em'
+                                                                            }}>
+                                                                                {editMsgOriginal ? "Edit original message:" : "Edit message:"}
+                                                                            </label>
+                                                                            <textarea
+                                                                                value={editMsgText}
+                                                                                onChange={e => setEditMsgText(e.target.value)}
+                                                                                required
+                                                                                className="text-input"
+                                                                                placeholder={editMsgOriginal ? "Edit original message ..." : "Edit message..."}
+                                                                                style={{
+                                                                                    width: '100%',
+                                                                                    minHeight: '120px',
+                                                                                    fontSize: '1.05rem',
+                                                                                    padding: '0.7rem 1rem',
+                                                                                    borderRadius: '8px',
+                                                                                    border: '1px solid var(--border)',
+                                                                                    background: 'var(--primary-bg)',
+                                                                                    color: 'var(--text)',
+                                                                                    resize: 'vertical',
+                                                                                    marginBottom: 0
+                                                                                }}
+                                                                            />
+                                                                            <div className="actions-row">
+                                                                                <ActionButton
+                                                                                    type="submit"
+                                                                                    variant="primary"
+                                                                                    className="send-btn"
+                                                                                >
+                                                                                    Save
+                                                                                </ActionButton>
+                                                                                <ActionButton
+                                                                                    type="button"
+                                                                                    variant="secondary"
+                                                                                    className="empire-back-btn"
+                                                                                    onClick={handleEditMsgCancel}
+                                                                                >
+                                                                                    Cancel
+                                                                                </ActionButton>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            )}
                                                             <form onSubmit={postMessage} className="message-form message-form-bottom">
                                                                 <input
                                                                     placeholder="Your empire"

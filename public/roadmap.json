@@ -19,20 +19,20 @@
   },
   {
     "title": "Edit messages while keeping the original message as a on_hover tooltip",
-    "status": "planned",
+    "status": "completed",
     "description": "Allow users to edit messages while displaying the original message as a tooltip on hover (maybe allow the GM to edit the the JSON to edit the old message tooltip).",
+    "priority": 3
+  },
+  {
+    "title": "Markdown Integration for Treaty Content and Empire Lore",
+    "status": "in-progress",
+    "description": "Implement a markdown editor for treaty content and empire lore.",
     "priority": 3
   },
   {
     "title": "Scroll function on Treaty View",
     "status": "in-progress",
     "description": "Implement a scroll function to improve navigation in the treaty view.",
-    "priority": 2
-  },
-  {
-    "title": "Markdown Integration for Treaty Content and Empire Lore",
-    "status": "in-progress",
-    "description": "Implement a markdown editor for treaty content and empire lore.",
     "priority": 2
   },
   {
@@ -52,6 +52,12 @@
     "status": "planned",
     "description": "Players can select when they are available (timestamps).",
     "priority": 3
+  },
+  {
+    "title": "News Ticker",
+    "status": "in-progress",
+    "description": "A news ticker for galactic news.",
+    "priority": 2
   },
   {
     "title": "Bulk Message Deletion (GM)",
