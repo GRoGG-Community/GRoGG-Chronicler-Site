@@ -367,14 +367,16 @@ function App() {
                         ...prev,
                         [key]: data
                     }));
-                    setTimeout(() => {
-                        if (messagesEndRef.current) {
-                            messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
-                        }
-                    }, 0);
                 });
         });
         setText('');
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                if (messagesEndRef.current) {
+                    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }, 150);
     }
 
     useEffect(() => {
