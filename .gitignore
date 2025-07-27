@@ -4,3 +4,5 @@ chatlogs.sqlite
 public/empires.json
 public/treaties.json
 public/empireinfo.json
+
+.idea/

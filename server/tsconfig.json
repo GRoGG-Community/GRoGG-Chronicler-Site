@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noImplicitAny": true,
+    "outDir": "build",
+    "strict": true,
+    "target": "es5"
+  },
+  "files": ["src/index.ts"]
+}
