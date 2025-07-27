@@ -68,7 +68,7 @@
   {
     "title": "Highlight changes in original message view",
     "status": "in-progress",
-    "description": "Highlight changes made to the original message in the view.",
+    "description": "Highlight changes made to the original message in the view. -> as colored text",
     "priority": 2
   },
   {
