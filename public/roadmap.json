@@ -1,5 +1,11 @@
 [
   {
+    "title": "Dissecting the App.js and creating multiple new components and utility functions for better maintainability",
+    "status": "in-progress",
+    "description": "Dissecting the App.js file to create multiple new components and utility functions for better maintainability.",
+    "priority": 4
+  },
+  {
     "title": "Fix Deleted Empire Channels not disappearing",
     "status": "in-progress",
     "description": "Fix the issue where deleted empire channels still appear in the UI.",
