@@ -36,6 +36,12 @@
     "priority": 2
   },
   {
+    "title": "Read directly from Stellaris .sav files for empires, current year, treaty expiration, timeline, etc.",
+    "status": "in-progress",
+    "description": "Implement a function to read directly from Stellaris .sav files for various game data. (Implement python-shell to use pdxparser)",
+    "priority": 2
+  },
+  {
     "title": "Permissions System",
     "status": "in-progress",
     "description": "Granular GameMaster permissions for moderation and management.",
