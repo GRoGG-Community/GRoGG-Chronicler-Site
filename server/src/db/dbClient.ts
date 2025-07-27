@@ -7,7 +7,15 @@ export default class DbClient {
         this.connect()
     }
 
-    private connect() {
+    public async close() {
+        const conn = await this.connection
+        if (!conn) return
+
+        conn.close()
+        this.connection = undefined
+    }
+
+    public connect() {
         if (this.connection) {
             return
         }

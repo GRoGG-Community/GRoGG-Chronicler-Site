@@ -1,3 +1,3 @@
-import DbClient from "./DbClient";
+import DbClient from "./db/dbClient";
 
 new DbClient();
