@@ -6,6 +6,12 @@
     "priority": 4
   },
   {
+    "title": "Sort out the CSS files and make them more maintainable",
+    "status": "in-progress",
+    "description": "Refactor the CSS files to improve maintainability and organization. Har har har I'm going crazy. Why did I have to skip web-tech?",
+    "priority": 4
+  },
+  {
     "title": "Fix Deleted Empire Channels not disappearing",
     "status": "in-progress",
     "description": "Fix the issue where deleted empire channels still appear in the UI.",
