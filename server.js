@@ -20,6 +20,18 @@ const DATA_FILE = path.join(__dirname, 'messages.json');
 const ROADMAP_FILE = path.join(PUBLIC_DIR, 'roadmap.json');
 const ROADMAP_BUILD_FILE = path.join(__dirname, 'build', 'roadmap.json');
 
+// --- Ensure JSON files exist ---
+function ensureJsonFile(file, defaultValue) {
+    if (!fs.existsSync(file)) {
+        fs.writeFileSync(file, JSON.stringify(defaultValue, null, 2), 'utf8');
+    }
+}
+ensureJsonFile(EMPIRE_INFO_FILE, {});
+ensureJsonFile(ACCOUNTS_FILE, { GameMaster: "stellaris" });
+ensureJsonFile(EMPIRES_FILE, []);
+ensureJsonFile(TREATIES_FILE, []);
+ensureJsonFile(DATA_FILE, []); 
+
 // --- Helper: Load/Save JSON ---
 function loadJson(file, fallback) {
     try {

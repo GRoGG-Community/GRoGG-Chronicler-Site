@@ -1,2 +1,7 @@
 node_modules/
 build/
+chatlogs.sqlite
+public/accounts.json
+public/empires.json
+public/treaties.json
+public/empireinfo.json
