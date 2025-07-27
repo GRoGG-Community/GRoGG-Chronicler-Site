@@ -89,6 +89,12 @@
     "description": "GameMaster can delete multiple messages at once.",
     "priority": 2
   },
+   {
+    "title": "Upload and internal sharing of Session Maps and Savegames",
+    "status": "planned",
+    "description": "GameMaster can upload and share session maps and savegames for all players.",
+    "priority": 2
+  },
   {
     "title": "Audit Log",
     "status": "planned",
