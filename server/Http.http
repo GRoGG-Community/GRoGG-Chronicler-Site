@@ -1,0 +1,14 @@
+### GET Empires
+GET http://localhost:3001/empires
+
+### GET Empire by ID
+GET http://localhost:3001/empires/210216810
+
+### POST Create Empire
+POST http://localhost:3001/empires
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "New Empire"
+}

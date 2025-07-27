@@ -1,0 +1,122 @@
+openapi: '3.1.1'
+info:
+  title: GROGG-Chronicler
+  version: '1.0'
+servers:
+  - url: http://localhost:3001
+paths:
+  /empires:
+    get:
+      summary: Lists all empires
+      description: Lists all known empires. May return an empty list
+      responses:
+        200:
+          description: Sucess
+          content:
+            "application/json": 
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/empire" }
+                minItems: 0
+    post:
+      description: The Id field can be send but will be ignored by the server.
+      summary: Creates a new empire
+      requestBody:
+        required: true
+        content:
+          "application/json":
+            schema: { $ref: "#/components/schemas/empire" }
+            example:
+              name: "FooBar"
+              lore: "Awesome Lore"
+              ethics: "Spaces better than tabs"
+              stats: ""
+              special: ""
+      responses:
+        201:
+          description: Empire was created. Returns the newly created empires
+          content:
+            "application/json":
+              schema: { $ref: "#/components/schemas/empire" }
+        400:
+          description: The name field is missing or the request is malformed in a different way
+          content:
+            "application/json":
+              schema: { $ref: "#/components/schemas/error" }
+              example:
+                status: 400
+                message: Missing field 'name'
+        409:
+          description: An Empire with the same name already exists
+          content:
+            "application/json":
+              schema: { $ref: "#/components/schemas/error" }
+              example:
+                status: 409
+                message: An empire with the name 'Foo-Bar' already exists with id 195
+          headers:
+            location:
+              description: "the url of the existing resource"
+              schema:
+                type: string
+
+        
+
+components:
+  schemas:
+    id:
+      type: integer
+      format: int64
+      example: 10
+      minimum: 0
+      description: A 64-bit numeric positive integer
+    error:
+      type: object
+      required: [ status, message ]
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+        message:
+          type: string
+
+    empire:
+      type: object
+      required: [id, name]
+      properties:
+        id: { $ref: "#/components/schemas/id" }
+        name:
+          type: string
+          description: Empire name
+        lore:
+          oneOf:
+            - type: "null"
+            - type: string
+        stats:
+          oneOf:
+            - type: "null"
+            - type: string
+        ethics:
+          oneOf:
+            - type: "null"
+            - type: string
+        special:
+          oneOf:
+            - type: "null"
+            - type: string
+    account:
+      type: object
+      properties:
+        id: { $ref: "#/components/schemas/id" }
+        name:
+          type: string
+      required: [ id, name ]
+    empireAccount:
+      type: object
+      properties:
+        accountId: { $ref: "#/components/schemas/id" }
+        empireId: { $ref: "#/components/schemas/id" }
+      required: [ accountId, empireId ]
+
+
