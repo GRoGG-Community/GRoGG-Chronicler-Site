@@ -89,7 +89,7 @@ function App() {
     function openTreatyJsonEditor() {
         setTreatyJsonError('');
         setTreatyJsonSaving(false);
-        fetch('/treaties.json?ts=' + Date.now())
+        fetch('/api/treaties?ts=' + Date.now())
             .then(res => res.json())
             .then(data => {
                 setTreatyJsonText(JSON.stringify(data, null, 2));
@@ -148,7 +148,7 @@ function App() {
     const [empireSort, setEmpireSort] = useState('name');
 
     function fetchTreaties() {
-        fetch('/treaties.json?ts=' + Date.now())
+        fetch('/api/treaties?ts=' + Date.now())
             .then(res => res.json())
             .then(data => {
                 setTreaties(Array.isArray(data) ? data : []);
@@ -380,7 +380,7 @@ function App() {
     }
 
     useEffect(() => {
-        const url = '/accounts.json?ts=' + Date.now();
+        const url = '/api/accounts?ts=' + Date.now();
         fetch(url)
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
@@ -391,7 +391,7 @@ function App() {
                     setAccounts({});
                     setError("Accounts data is invalid or missing.");
                 } else {
-                    setAccounts(data);
+                    setAccounts(data.accounts || {});
                     setError('');
                 }
                 setAccountsLoaded(true);
@@ -404,7 +404,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        fetch('/empires.json')
+        fetch('/api/empires')
             .then(res => res.json())
             .then(data => {
                 setEmpires(Array.isArray(data) ? data : []);
@@ -412,7 +412,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        fetch('/treaties.json')
+        fetch('/api/treaties')
             .then(res => res.json())
             .then(data => {
                 setTreaties(Array.isArray(data) ? data : []);

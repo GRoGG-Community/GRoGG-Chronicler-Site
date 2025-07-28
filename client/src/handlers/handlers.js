@@ -22,11 +22,11 @@ export function handleCreateAccount(
         setAccountsTabLoading(false);
         return;
     }
-    // Fetch latest accounts.json
-    fetch('/accounts.json?ts=' + Date.now())
+    // Fetch latest accounts from backend API
+    fetch('/api/accounts?ts=' + Date.now())
         .then(res => res.json())
         .then(data => {
-            if (data[name]) {
+            if (data.accounts[name]) {
                 setAccountError('Account name already exists.');
                 setAccountsTabLoading(false);
                 return;
@@ -40,7 +40,7 @@ export function handleCreateAccount(
             .then(res => res.json())
             .then(result => {
                 if (result.success) {
-                    setAccounts({ ...data, [name]: pass });
+                    setAccounts({ ...data.accounts, [name]: pass });
                     setNewAccountName('');
                     setNewAccountPass('');
                     setAccountSuccess('Account created successfully.');
@@ -66,10 +66,10 @@ export function handleDeleteAccount(
         setEditAccountLoading(false);
         return;
     }
-    fetch('/accounts.json?ts=' + Date.now())
+    fetch('/api/accounts?ts=' + Date.now())
         .then(res => res.json())
         .then(data => {
-            if (!data[acc]) {
+            if (!data.accounts[acc]) {
                 setEditAccountError('Account does not exist.');
                 setEditAccountLoading(false);
                 return;
@@ -83,7 +83,7 @@ export function handleDeleteAccount(
             .then(res => res.json())
             .then(result => {
                 if (result.success) {
-                    const updated = { ...data };
+                    const updated = { ...data.accounts };
                     delete updated[acc];
                     setAccounts(updated);
                     setAccountSuccess('Account deleted.');
@@ -115,15 +115,15 @@ export function handleRenameAccount(
         setEditAccountLoading(false);
         return;
     }
-    fetch('/accounts.json?ts=' + Date.now())
+    fetch('/api/accounts?ts=' + Date.now())
         .then(res => res.json())
         .then(data => {
-            if (!data[editAccount]) {
+            if (!data.accounts[editAccount]) {
                 setEditAccountError('Account does not exist.');
                 setEditAccountLoading(false);
                 return;
             }
-            if (data[newName]) {
+            if (data.accounts[newName]) {
                 setEditAccountError('Account name already exists.');
                 setEditAccountLoading(false);
                 return;
@@ -137,7 +137,7 @@ export function handleRenameAccount(
             .then(res => res.json())
             .then(result => {
                 if (result.success) {
-                    const updated = { ...data };
+                    const updated = { ...data.accounts };
                     updated[newName] = updated[editAccount];
                     delete updated[editAccount];
                     setAccounts(updated);
@@ -171,10 +171,10 @@ export function handleChangePassword(
         setEditAccountLoading(false);
         return;
     }
-    fetch('/accounts.json?ts=' + Date.now())
+    fetch('/api/accounts?ts=' + Date.now())
         .then(res => res.json())
         .then(data => {
-            if (!data[editAccount]) {
+            if (!data.accounts[editAccount]) {
                 setEditAccountError('Account does not exist.');
                 setEditAccountLoading(false);
                 return;
@@ -188,7 +188,7 @@ export function handleChangePassword(
             .then(res => res.json())
             .then(result => {
                 if (result.success) {
-                    setAccounts({ ...data, [editAccount]: newPass });
+                    setAccounts({ ...data.accounts, [editAccount]: newPass });
                     setEditAccount(null);
                     setAccountSuccess('Password changed successfully.');
                 } else {
@@ -266,7 +266,7 @@ export function handleDeleteEmpire(
         setNewEmpireLoading(false);
         return;
     }
-    fetch('/empires.json?ts=' + Date.now())
+    fetch('/api/empires?ts=' + Date.now())
         .then(res => res.json())
         .then(data => {
             if (!data.some(e => e.name === empireName)) {

@@ -16,7 +16,7 @@ export default function EmpireListController({
     const [empires, setEmpires] = useState(undefined);
 
     useEffect(() => {
-        fetch('/empires.json')
+        fetch('/api/empires')
             .then(res => res.json())
             .then(data => {
                 setEmpires(Array.isArray(data) ? data : []);

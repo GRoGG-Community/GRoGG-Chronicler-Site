@@ -22,7 +22,7 @@ export default function TreatyListController({
     }, [initialTreaties, initialLoaded]);
     useEffect(() => {
         if (initialTreaties) return;
-        fetch('/treaties.json')
+        fetch('/api/treaties')
             .then(res => res.json())
             .then(data => {
                 setTreaties(Array.isArray(data) ? data : []);

@@ -10,10 +10,10 @@ export default function AccountListController({
     const [accounts, setAccounts] = useState(undefined);
 
     useEffect(() => {
-        fetch('/accounts.json')
+        fetch('/api/accounts')
             .then(res => res.json())
             .then(data => {
-                setAccounts(data && typeof data === 'object' && !Array.isArray(data) ? data : {});
+                setAccounts(data && typeof data === 'object' && !Array.isArray(data) ? data.accounts : {});
             });
     }, []);
 
