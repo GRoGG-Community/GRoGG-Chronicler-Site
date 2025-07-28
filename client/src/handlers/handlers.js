@@ -219,7 +219,7 @@ export function handleCreateEmpire(
         setNewEmpireLoading(false);
         return;
     }
-    fetch('/empires.json?ts=' + Date.now())
+    fetch('/api/empires?ts=' + Date.now())
         .then(res => res.json())
         .then(data => {
             if (data.some(e => e.name === name)) {
@@ -228,22 +228,29 @@ export function handleCreateEmpire(
                 return;
             }
             // Use backend API for creation
-            return fetch('/api/empires/create', {
+            return fetch('/api/empires', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
+                body: JSON.stringify({
+                    id: Date.now(),
+                    name: name
+                })
             })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    setEmpires([...data, { name, account: null }]);
-                    setNewEmpireName('');
-                } else {
-                    setNewEmpireError(result.error || 'Failed to create empire.');
-                }
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Unexpected response status: ' + res.status);
+                    }
+                    return res.json();
+                })
+            .then(() => {
+                setEmpires([...data, { name: name, account: null }]);
+                setNewEmpireName('');
             });
         })
-        .catch(() => setNewEmpireError('Failed to create empire.'))
+        .catch((e) => {
+            console.error('Error creating empire:', e);
+            setNewEmpireError('Failed to create empire.');
+        })
         .finally(() => setNewEmpireLoading(false));
 }
 
