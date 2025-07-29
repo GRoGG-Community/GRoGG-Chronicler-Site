@@ -15,6 +15,18 @@ export async function fetchAccounts() {
     return data;
 }
 
+export async function editAccount(id, name, password) {
+    return await fetch(`api/accounts/${id}`,{ 
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: id, 
+            name: name, 
+            password: password
+        })
+    })
+}
+
 export async function deleteAccount(name) {
     const accounts = await fetchAccountsRaw()
     const account = accounts.find(it => it.name === name)
@@ -24,7 +36,7 @@ export async function deleteAccount(name) {
         return
     }
 
-    return fetch(`/api/accounts/${account.id}`, 
+    return await fetch(`/api/accounts/${account.id}`, 
         {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }

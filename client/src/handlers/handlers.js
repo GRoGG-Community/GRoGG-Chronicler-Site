@@ -1,4 +1,4 @@
-import { deleteAccount } from "../clients/accounts";
+import { deleteAccount, fetchAccounts } from "../clients/accounts";
 
 // --- Account handlers ---
 export function handleCreateAccount(
@@ -26,7 +26,7 @@ export function handleCreateAccount(
     }
     // Fetch latest accounts from backend API
     fetchAccounts().then(data => {
-        if (data.accounts[name]) {
+        if (data[name]) {
             setAccountError('Account name already exists.');
             setAccountsTabLoading(false);
             return;
@@ -40,10 +40,8 @@ export function handleCreateAccount(
                 name: name,
                 password: pass
             })
-        })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
+        }).then(result => {
+                if (result.ok) {
                     setAccounts({ ...data.accounts, [name]: pass });
                     setNewAccountName('');
                     setNewAccountPass('');
@@ -53,8 +51,15 @@ export function handleCreateAccount(
                 }
             });
     })
-        .catch(() => setAccountError('Failed to create account.'))
+        .catch((e) => {
+            console.error("Fail to create account", e)
+            setAccountError('Failed to create account.')
+        })
         .finally(() => setAccountsTabLoading(false));
+}
+
+export function handleEditAccount(acc) {
+    
 }
 
 export function handleDeleteAccount(

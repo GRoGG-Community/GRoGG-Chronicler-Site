@@ -27,6 +27,7 @@ import EmpireListController from './components/empire/EmpireListController';
 import TreatyListController from './components/treaty/TreatyListController';
 import AccountListController from './components/account/AccountListController';
 import ActionButton from './components/ActionButton';
+import {tabs} from './components/Header'
 
 function App() {
     const [empires, setEmpires] = useState([]);
@@ -522,15 +523,6 @@ function App() {
     }
 
     const showAccountsTab = account && account.username === "GameMaster";
-    const tabs = [
-        { key: 'channels', label: 'Channels' },
-        { key: 'empires', label: 'Empires' },
-        { key: 'treaties', label: 'Treaties' }
-    ];
-    if (showAccountsTab) {
-        tabs.push({ key: 'accounts', label: 'Manage Accounts' });
-        tabs.push({ key: 'manage-empires', label: 'Manage Empires' });
-    }
 
     const accountEditPanelRef = useRef(null);
 
