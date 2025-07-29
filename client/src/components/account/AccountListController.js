@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { LoadingMessage } from "../Messages";
 import AccountList from "./AccountList";
+import { fetchAccounts } from "../../clients/accounts";
 
 export default function AccountListController({
     onEdit,
@@ -10,11 +11,7 @@ export default function AccountListController({
     const [accounts, setAccounts] = useState(undefined);
 
     useEffect(() => {
-        fetch('/api/accounts')
-            .then(res => res.json())
-            .then(data => {
-                setAccounts(data && typeof data === 'object' && !Array.isArray(data) ? data.accounts : {});
-            });
+        fetchAccounts().then(data => setAccounts(data));
     }, []);
 
     if (accounts === undefined) {

@@ -1,3 +1,5 @@
+import { deleteAccount } from "../clients/accounts";
+
 // --- Account handlers ---
 export function handleCreateAccount(
     e,
@@ -23,20 +25,22 @@ export function handleCreateAccount(
         return;
     }
     // Fetch latest accounts from backend API
-    fetch('/api/accounts?ts=' + Date.now())
-        .then(res => res.json())
-        .then(data => {
-            if (data.accounts[name]) {
-                setAccountError('Account name already exists.');
-                setAccountsTabLoading(false);
-                return;
-            }
-            // Use backend API for creation
-            return fetch('/api/accounts', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, pass })
+    fetchAccounts().then(data => {
+        if (data.accounts[name]) {
+            setAccountError('Account name already exists.');
+            setAccountsTabLoading(false);
+            return;
+        }
+        // Use backend API for creation
+        return fetch('/api/accounts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: new Date(),
+                name: name,
+                password: pass
             })
+        })
             .then(res => res.json())
             .then(result => {
                 if (result.success) {
@@ -48,7 +52,7 @@ export function handleCreateAccount(
                     setAccountError(result.error || 'Failed to create account.');
                 }
             });
-        })
+    })
         .catch(() => setAccountError('Failed to create account.'))
         .finally(() => setAccountsTabLoading(false));
 }
@@ -66,31 +70,16 @@ export function handleDeleteAccount(
         setEditAccountLoading(false);
         return;
     }
-    fetch('/api/accounts?ts=' + Date.now())
-        .then(res => res.json())
-        .then(data => {
-            if (!data.accounts[acc]) {
-                setEditAccountError('Account does not exist.');
-                setEditAccountLoading(false);
-                return;
+    deleteAccount(acc)
+        .then(async result => {
+            if (result.ok) {
+                const updated = await fetchAccounts();
+                console.log(updated)
+                setAccounts(updated);
+                setAccountSuccess('Account deleted.');
+            } else {
+                setEditAccountError(result.error || 'Failed to delete account.');
             }
-            // Use backend API for deletion
-            return fetch('/api/accounts/delete', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: acc })
-            })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    const updated = { ...data.accounts };
-                    delete updated[acc];
-                    setAccounts(updated);
-                    setAccountSuccess('Account deleted.');
-                } else {
-                    setEditAccountError(result.error || 'Failed to delete account.');
-                }
-            });
         })
         .catch(() => setEditAccountError('Failed to delete account.'))
         .finally(() => setEditAccountLoading(false));
@@ -134,19 +123,19 @@ export function handleRenameAccount(
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ oldName: editAccount, newName })
             })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    const updated = { ...data.accounts };
-                    updated[newName] = updated[editAccount];
-                    delete updated[editAccount];
-                    setAccounts(updated);
-                    setEditAccount(null);
-                    setAccountSuccess('Account renamed successfully.');
-                } else {
-                    setEditAccountError(result.error || 'Failed to rename account.');
-                }
-            });
+                .then(res => res.json())
+                .then(result => {
+                    if (result.ok) {
+                        const updated = { ...data.accounts };
+                        updated[newName] = updated[editAccount];
+                        delete updated[editAccount];
+                        setAccounts(updated);
+                        setEditAccount(null);
+                        setAccountSuccess('Account renamed successfully.');
+                    } else {
+                        setEditAccountError(result.error || 'Failed to rename account.');
+                    }
+                });
         })
         .catch(() => setEditAccountError('Failed to rename account.'))
         .finally(() => setEditAccountLoading(false));
@@ -185,16 +174,16 @@ export function handleChangePassword(
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: editAccount, pass: newPass })
             })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    setAccounts({ ...data.accounts, [editAccount]: newPass });
-                    setEditAccount(null);
-                    setAccountSuccess('Password changed successfully.');
-                } else {
-                    setEditAccountError(result.error || 'Failed to change password.');
-                }
-            });
+                .then(res => res.json())
+                .then(result => {
+                    if (result.ok) {
+                        setAccounts({ ...data.accounts, [editAccount]: newPass });
+                        setEditAccount(null);
+                        setAccountSuccess('Password changed successfully.');
+                    } else {
+                        setEditAccountError(result.error || 'Failed to change password.');
+                    }
+                });
         })
         .catch(() => setEditAccountError('Failed to change password.'))
         .finally(() => setEditAccountLoading(false));
@@ -242,10 +231,10 @@ export function handleCreateEmpire(
                     }
                     return res.json();
                 })
-            .then(() => {
-                setEmpires([...data, { name: name, account: null }]);
-                setNewEmpireName('');
-            });
+                .then(() => {
+                    setEmpires([...data, { name: name, account: null }]);
+                    setNewEmpireName('');
+                });
         })
         .catch((e) => {
             console.error('Error creating empire:', e);
@@ -280,14 +269,14 @@ export function handleDeleteEmpire(
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: empireName })
             })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    setEmpires(data.filter(e => e.name !== empireName));
-                } else {
-                    setNewEmpireError(result.error || 'Failed to delete empire.');
-                }
-            });
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        setEmpires(data.filter(e => e.name !== empireName));
+                    } else {
+                        setNewEmpireError(result.error || 'Failed to delete empire.');
+                    }
+                });
         })
         .catch(() => setNewEmpireError('Failed to delete empire.'))
         .finally(() => setNewEmpireLoading(false));
@@ -299,14 +288,14 @@ export function handleLinkAccount(empireName, accountName) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ empireName, accountName })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            setEmpires(prev =>
-                prev.map(e => e.name === empireName ? { ...e, account: accountName } : e)
-            );
-        }
-    });
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                setEmpires(prev =>
+                    prev.map(e => e.name === empireName ? { ...e, account: accountName } : e)
+                );
+            }
+        });
 }
 export function handleUnlinkAccount(empireName) {
     fetch('/api/empires/unlink', {
@@ -314,12 +303,12 @@ export function handleUnlinkAccount(empireName) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ empireName })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            setEmpires(prev =>
-                prev.map(e => e.name === empireName ? { ...e, account: null } : e)
-            );
-        }
-    });
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                setEmpires(prev =>
+                    prev.map(e => e.name === empireName ? { ...e, account: null } : e)
+                );
+            }
+        });
 }
