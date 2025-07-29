@@ -210,5 +210,22 @@
       "owner": "GameMaster",
       "id": "1753738167463"
     }
+  ],
+  "accounts": [
+    {
+      "id": 0,
+      "name": "GameMaster",
+      "password": "stellaris"
+    },
+    {
+      "id": 1,
+      "name": "test",
+      "password": "test"
+    },
+    {
+      "id": 2,
+      "name": "test2",
+      "password": "test2"
+    }
   ]
 }
