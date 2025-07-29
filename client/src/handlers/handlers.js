@@ -276,7 +276,7 @@ export function handleDeleteEmpire(
             })
                 .then(res => res.json())
                 .then(result => {
-                    if (result.success) {
+                    if (result.ok) {
                         setEmpires(data.filter(e => e.name !== empireName));
                     } else {
                         setNewEmpireError(result.error || 'Failed to delete empire.');
