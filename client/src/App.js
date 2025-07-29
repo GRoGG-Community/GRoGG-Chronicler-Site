@@ -15,22 +15,18 @@ import {
     handleCreateEmpire,
     handleRenameAccount,
     handleChangePassword,
-    handleDeleteAccount,
-    handleDeleteEmpire
+    handleDeleteAccount
 } from './handlers/handlers';
 import { useBurgerMenu } from './components/BurgerMenu';
 import RoadmapTab from './components/RoadmapTab';
-import AccountList from './components/account/AccountList';
 import MessageList from './components/MessageList';
-import EmpireList from './components/empire/EmpireList';
-import TreatyList from './components/treaty/TreatyList';
 import SearchSortBar from './components/SearchSortBar';
 import { ErrorMessage, LoadingMessage } from './components/Messages';
 import cutOffDotter from './utils/cutOffDotter';
 import EmpireListController from './components/empire/EmpireListController';
 import TreatyListController from './components/treaty/TreatyListController';
 import AccountListController from './components/account/AccountListController';
-import ActionButton, { actionBtnStyle } from './components/ActionButton';
+import ActionButton from './components/ActionButton';
 
 function App() {
     const [empires, setEmpires] = useState([]);
