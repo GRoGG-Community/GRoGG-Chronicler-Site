@@ -1,17 +1,23 @@
 import { editAccount } from "../../clients/accounts";
 import { handleCreateAccount } from "../../handlers/handlers";
 import AccountEdit from "./AccountEdit";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
+interface AccountEditControllerProps {
+    updateAccounts: () => void, 
+    accountName?: string, 
+    accountPass?: string, 
+    accountId?: number
+}
 
-export default function AccountEditController({updateAccounts, accountName, accountPass, accountId}) {
+export default function AccountEditController({updateAccounts, accountName, accountPass, accountId}: AccountEditControllerProps) {
      const [name, setName] = useState(accountName || '');
      const [pass, setPass] = useState(accountPass || '');
 
      const [error, setError] = useState('')
      const [success, setSuccess] = useState('')
 
-     function onSubmit(e) {
+     function onSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         // Account is being editted
         if (accountId) {

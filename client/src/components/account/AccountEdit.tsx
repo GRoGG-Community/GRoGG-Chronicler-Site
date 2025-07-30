@@ -1,4 +1,17 @@
+import { internalRuntype } from "simple-runtypes/dist/runtype";
 import { ErrorMessage, LoadingMessage } from "../Messages";
+import { FormEventHandler } from "react";
+
+interface AccountEditProps {
+    error: string,
+    success: string,
+    accountName: string, 
+    accountPass: string, 
+    onSubmit: FormEventHandler<HTMLFormElement>, 
+    onNameChanged: (newName: string) => void, 
+    onPasswordChanged: (newPassword: string) => void,
+    buttonLabel: string
+}
 
 export default function AccountEdit({ 
     error,
@@ -9,7 +22,7 @@ export default function AccountEdit({
     onNameChanged, 
     onPasswordChanged,
     buttonLabel
-}) {
+}: AccountEditProps) {
     return (<>
         <form
             onSubmit={onSubmit}
@@ -39,6 +52,6 @@ export default function AccountEdit({
             </div>
         </form>
     {error && <ErrorMessage>{error}</ErrorMessage>}
-    {success && <LoadingMessage style={{ color: 'limegreen' }}>{success}</LoadingMessage>}
+    {success && <LoadingMessage>{success}</LoadingMessage>}
     </>)
 }

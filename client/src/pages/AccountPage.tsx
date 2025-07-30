@@ -4,11 +4,12 @@ import AccountListController from "../components/account/AccountListController";
 import Header from "../components/Header";
 import { fetchAccountsRaw } from "../clients/accounts";
 import { handleDeleteAccount } from "../handlers/handlers";
+import Account, { AccountMap } from "../model/Account";
 
 export function AccountPage() {
-    const [editAccount, setEditAccount] = useState(undefined)
+    const [editAccount, setEditAccount] = useState<Account | undefined>(undefined)
 
-    const [accounts, setAccounts] = useState({});
+    const [accounts, setAccounts] = useState<Array<Account>>([]);
 
     function updateAccounts() {
         console.log("Updating accounts")
@@ -26,10 +27,9 @@ export function AccountPage() {
                 <AccountEditController updateAccounts={updateAccounts}/>
                 <h3>All Accounts</h3>
                 <AccountListController
-                    accounts={accounts}
                     onEdit={acc => {
                         console.log("Starting edit", accounts.find(it => it.name === acc))
-                        setEditAccount(accounts.find(it => it.name === acc));
+                        setEditAccount(accounts.find(it => it.name === acc)!!);
                     }}
                     onDelete={acc => handleDeleteAccount(
                         acc,

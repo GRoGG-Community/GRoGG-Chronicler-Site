@@ -1,4 +1,3 @@
-import React from 'react';
 import { LoadingMessage, EmptyMessage } from './Messages';
 
 export default function ListContainer({

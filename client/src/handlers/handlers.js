@@ -36,7 +36,7 @@ export function handleCreateAccount(
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                id: new Date(),
+                id: Date.now(),
                 name: name,
                 password: pass
             })
