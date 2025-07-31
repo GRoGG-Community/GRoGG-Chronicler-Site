@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { LoadingMessage } from "../Messages";
 import AccountList from "./AccountList";
-import { fetchAccounts, fetchAccountsRaw } from "../../clients/accounts";
+import { fetchAccountMap, fetchAccounts } from "../../clients/accounts";
 import Account, { AccountMap } from "../../model/Account";
 
 interface AccountListControllerProps {
@@ -18,7 +18,7 @@ export default function AccountListController({
     const [accounts, setAccounts] = useState<Array<Account> | undefined>(undefined);
 
     useEffect(() => {
-        fetchAccountsRaw().then(data => setAccounts(data));
+        fetchAccounts().then(data => setAccounts(data));
     }, []);
 
     if (accounts === undefined) {

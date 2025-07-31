@@ -1,4 +1,4 @@
-import { deleteAccount, fetchAccounts } from "../clients/accounts";
+import { deleteAccount, fetchAccountMap } from "../clients/accounts";
 
 // --- Account handlers ---
 export function handleCreateAccount(
@@ -25,7 +25,7 @@ export function handleCreateAccount(
         return;
     }
     // Fetch latest accounts from backend API
-    fetchAccounts().then(data => {
+    fetchAccountMap().then(data => {
         if (data[name]) {
             setAccountError('Account name already exists.');
             setAccountsTabLoading(false);
@@ -78,7 +78,7 @@ export function handleDeleteAccount(
     deleteAccount(acc)
         .then(async result => {
             if (result.ok) {
-                const updated = await fetchAccounts();
+                const updated = await fetchAccountMap();
                 console.log(updated)
                 setAccounts(updated);
                 setAccountSuccess('Account deleted.');

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AccountEditController from "../components/account/AccountEditController";
 import AccountListController from "../components/account/AccountListController";
 import Header from "../components/Header";
-import { fetchAccountsRaw } from "../clients/accounts";
+import { fetchAccounts } from "../clients/accounts";
 import { handleDeleteAccount } from "../handlers/handlers";
 import Account, { AccountMap } from "../model/Account";
 
@@ -13,7 +13,7 @@ export function AccountPage() {
 
     function updateAccounts() {
         console.log("Updating accounts")
-        fetchAccountsRaw().then(setAccounts)
+        fetchAccounts().then(setAccounts)
     }
 
     useEffect(updateAccounts, []);
