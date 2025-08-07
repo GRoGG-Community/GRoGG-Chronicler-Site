@@ -1,0 +1,560 @@
+@import './colorbase.css';
+
+/* MIGRATED TO COMPONENTS.CSS - USE NEW CLASSES:
+   .empires-info-section.card → .content-section
+   .empires-header → .section-header  
+   .empires-info-list → .list-grid or .list-flex
+   .empire-info-card → .card .card-interactive
+   .empire-view-btn → .btn .btn-primary
+   .empire-back-btn → .btn .btn-secondary
+   .empire-save-btn → .btn .btn-primary
+*/
+
+/* Empire Management Section - Similar to Account Management */
+.empire-manage-section {
+    background: none;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px; /* Increase max width to accommodate buttons */
+    box-sizing: border-box;
+    overflow: visible; /* Ensure content isn't clipped */
+}
+
+/* Empire Form - Similar to Account Form */
+.empire-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.empire-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.empire-form-button-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.empire-create-btn {
+    width: auto;
+    min-width: 120px;
+    max-width: 200px;
+}
+
+/* Empire List - Similar to Account List */
+.empires-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 1rem 0 0 0;
+    width: 100%;
+    overflow: visible; /* Ensure content isn't clipped */
+}
+
+.empire-item {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    background: var(--primary-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 0.7rem 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0; /* Allow item to shrink */
+    overflow: hidden; /* Contain children within bounds */
+    min-height: 3.6rem; /* Force consistent height */
+}
+
+.empire-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+    min-width: 0; /* Allow text to shrink and wrap */
+    overflow: hidden; /* Contain text within bounds */
+    align-self: center; /* Center align with actions */
+}
+
+.empire-info b {
+    /* Control text wrapping more carefully */
+    word-break: normal;
+    overflow-wrap: break-word;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.empire-linked-account {
+    font-size: 0.85rem;
+    color: var(--accent);
+    /* Control text wrapping more carefully */
+    word-break: normal;
+    overflow-wrap: break-word;
+    line-height: 1.2;
+}
+
+.empire-unlinked {
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.7;
+    font-style: italic;
+    /* Control text wrapping more carefully */
+    word-break: normal;
+    overflow-wrap: break-word;
+    line-height: 1.2;
+}
+
+.empire-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    align-self: center; /* Center align with empire info */
+    overflow: hidden; /* Prevent buttons from spilling outside */
+    max-width: fit-content; /* Only take space needed */
+    min-height: 2.2rem; /* Force consistent height regardless of content */
+}
+
+/* Allow wrapping on mobile for empire actions */
+@media (max-width: 1024px) {
+    .empire-actions {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        max-width: none; /* Allow full width on smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .empire-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+    }
+    
+    .empire-info {
+        align-self: stretch;
+        min-width: unset;
+    }
+    
+    .empire-actions {
+        flex-wrap: wrap;
+        align-self: stretch;
+        justify-content: stretch;
+        max-width: none; /* Remove width constraints on mobile */
+    }
+}
+
+.empire-manage-btn {
+    min-width: 80px;
+    height: 2.2rem;
+    padding: 0.3rem 1rem;
+    font-size: 0.98rem;
+    white-space: nowrap; /* Prevent button text from wrapping */
+    flex-shrink: 0; /* Don't allow buttons to shrink */
+}
+
+/* Style the AccountDropdown to match buttons */
+.empire-actions label {
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.empire-actions select {
+    min-width: 120px;
+    height: 2.2rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.98rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--primary-bg);
+    color: var(--text);
+    box-sizing: border-box;
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Empire-specific styles that remain */
+
+/* Empire Cards Grid Layout */
+.empire-list-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+    max-width: 100%;
+}
+
+/* Ensure max 3 columns */
+@media (min-width: 1200px) {
+    .empire-list-cards {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1100px;
+        margin: 1rem auto 0 auto;
+    }
+}
+
+.empire-info-title {
+    font-weight: bold;
+    font-size: 1.13rem;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.empire-info-details {
+    font-size: 0.98rem;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.empire-info-field {
+    margin: 0.15rem 0 0.5rem 0;
+    padding-left: 0.2rem;
+    font-size: 0.95rem;
+    color: #b3cfff;
+    white-space: pre-line;
+}
+
+/* Empire Card Styles */
+.empire-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.empire-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.empire-card-title {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.empire-info-preview {
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+.empire-info-snippet {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.empire-info-snippet strong {
+    color: var(--accent);
+}
+
+.empire-info-empty-preview {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.empire-card-info {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+    align-items: center;
+}
+
+/* Card-specific button styling for consistent alignment */
+.empire-card-info .empire-view-btn,
+.empire-card-info .empire-edit-btn {
+    flex: 1 !important;
+    min-height: 2.2rem !important;
+    max-width: none !important;
+    padding: 0.3rem 0.8rem !important;
+    font-size: 0.9rem !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    border: none !important;
+    background: var(--accent) !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    margin-top: 0 !important;
+    margin: 0 !important;
+}
+
+.empire-card-info .empire-view-btn:hover,
+.empire-card-info .empire-edit-btn:hover {
+    background: #0090c0 !important;
+}
+
+/* Empire View Actions - for view page button alignment */
+.empire-view-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.empire-view-actions .empire-edit-btn,
+.empire-view-actions .empire-back-btn {
+    min-width: 90px !important;
+    min-height: 2.2rem !important;
+    max-width: none !important;
+    padding: 0.3rem 1.1rem !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    border: none !important;
+    background: var(--accent) !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+}
+
+.empire-view-actions .empire-edit-btn:hover,
+.empire-view-actions .empire-back-btn:hover {
+    background: #0090c0 !important;
+}
+
+/* Empire empty state button styling */
+.empire-info-empty .empire-edit-btn {
+    min-height: 2.2rem !important;
+    padding: 0.3rem 1.1rem !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    border: none !important;
+    background: var(--accent) !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    margin-top: 1rem !important;
+}
+
+.empire-info-empty .empire-edit-btn:hover {
+    background: #0090c0 !important;
+}
+
+.empire-info-owner {
+    color: #b3cfff;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+    font-size: 1.08em;
+    text-align: center;
+}
+
+.empire-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.empire-view-btn,
+.empire-back-btn,
+.empire-save-btn {
+    min-width: 90px;
+    max-width: 120px;
+    font-size: 1em;
+    padding: 0.3rem 1.1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-height: 2.2rem;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+}
+.empire-view-btn:hover,
+.empire-back-btn:hover,
+.empire-save-btn:hover {
+    background: #0090c0;
+}
+
+/* Edit panel style */
+.empire-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    background: var(--primary-bg);
+    border: 1.5px solid var(--accent);
+    border-radius: 12px;
+    box-shadow: 0 2px 16px #0002;
+    padding: 2.2rem 2.5rem;
+    width: 100%;
+    max-width: 900px;
+    min-width: 0;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.empire-edit-form label {
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+}
+
+.empire-edit-form input,
+.empire-edit-form textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--primary-bg);
+    color: var(--text);
+    font-size: 0.98rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.3rem;
+    resize: vertical;
+}
+
+/* Search and sort styles */
+.empire-search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-top: 0.5rem;
+    background: var(--primary-bg);
+    color: var(--text);
+}
+
+.empire-search-clear-btn {
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+.empire-sort-select {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    background: var(--primary-bg);
+    color: var(--text);
+    margin-left: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .empires-info-section.card {
+        max-width: 98vw;
+        padding: 1.2rem 0.7rem;
+    }
+    .empire-edit-form {
+        max-width: 98vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .empire-info-title {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .empires-info-section.card {
+        max-width: 98vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .empires-info-list {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .empire-info-card,
+    .empire-list-card {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+    .empire-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    .empire-edit-form {
+        max-width: 98vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .empires-info-section.card,
+    .empire-edit-form {
+        max-width: 100vw;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+    }
+    .empire-info-title {
+        font-size: 1.3rem;
+    }
+    .empire-info-card,
+    .empire-list-card {
+        padding: 1rem 0.2rem;
+    }
+}
+

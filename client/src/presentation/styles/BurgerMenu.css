@@ -1,0 +1,558 @@
+@import './colorbase.css';
+
+/* ==============================================
+   BURGER MENU SYSTEM
+   ============================================== */
+
+/* Container */
+.burger-menu-container {
+    position: relative;
+    z-index: 1000;
+}
+
+/* Burger Menu Button */
+.burger-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--primary-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    will-change: background-color, border-color;
+}
+
+.burger-menu-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.burger-menu-btn:hover .burger-line {
+    background: #fff;
+}
+
+.burger-menu-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.burger-menu-btn.active .burger-line {
+    background: #fff;
+}
+
+/* Burger Lines */
+.burger-line {
+    width: 1.2rem;
+    height: 2px;
+    background: var(--text);
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+    transform-origin: center;
+    will-change: transform, opacity;
+}
+
+.burger-menu-btn.active .burger-line:nth-child(1) {
+    transform: rotate(45deg) translate(0.3rem, 0.3rem);
+}
+
+.burger-menu-btn.active .burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu-btn.active .burger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(0.3rem, -0.3rem);
+}
+
+.burger-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+/* Menu Panel */
+.burger-menu-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--card-bg);
+    border-left: 2px solid var(--accent);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(0);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+/* Remove the old slideInRight animation since we're using transitions now */
+
+/* Panel States for better animations */
+.burger-menu-panel.entering {
+    transform: translateX(100%);
+}
+
+.burger-menu-panel.entered {
+    transform: translateX(0);
+}
+
+.burger-menu-panel.exiting {
+    transform: translateX(100%);
+}
+
+/* Panel Header */
+.burger-menu-header,
+.burger-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--primary-bg);
+}
+
+.burger-menu-header h3,
+.burger-panel-header h3 {
+    margin: 0;
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Panel Header Actions */
+.burger-panel-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.burger-panel-back {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+.burger-panel-back:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateX(-2px);
+}
+
+.burger-menu-close,
+.burger-panel-close {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.burger-menu-close:hover,
+.burger-panel-close:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Navigation List */
+.burger-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.burger-nav-item {
+    margin: 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.burger-nav-item:last-child {
+    border-bottom: none;
+}
+
+.burger-nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 0.75rem;
+    text-align: left;
+}
+
+.burger-nav-link:hover {
+    background: var(--primary-bg);
+    color: var(--accent);
+}
+
+.burger-nav-item.active .burger-nav-link {
+    background: var(--accent);
+    color: #fff;
+}
+
+.burger-nav-item.special .burger-nav-link {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.burger-nav-icon {
+    font-size: 1.2rem;
+    width: 1.5rem;
+    text-align: center;
+}
+
+.burger-nav-label {
+    flex: 1;
+}
+
+/* Menu Actions */
+.burger-menu-actions {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    background: var(--primary-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.burger-menu-action-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.burger-menu-action-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+/* Permissions Panel */
+.burger-permissions-panel,
+.burger-roadmap-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    max-width: 95vw;
+    height: 100vh;
+    background: var(--card-bg);
+    border-left: 2px solid var(--accent);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    animation: slideInRight 0.3s ease;
+}
+
+.burger-panel-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+/* Permissions */
+.permissions-description {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.permissions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.permission-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--primary-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.permission-info {
+    flex: 1;
+}
+
+.permission-label {
+    display: block;
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+}
+
+.permission-description {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.8;
+    line-height: 1.3;
+}
+
+.permission-toggle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    background: var(--primary-bg);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.permission-toggle.enabled {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.permission-toggle:hover {
+    border-color: var(--accent);
+}
+
+.permission-toggle.enabled:hover {
+    background: #0090c0;
+}
+
+/* Roadmap */
+.roadmap-description {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.roadmap-loading {
+    text-align: center;
+    color: #aaa;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.roadmap-error {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+
+.roadmap-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.roadmap-section {
+    background: var(--primary-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.roadmap-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s ease;
+}
+
+.roadmap-section-header:hover {
+    background: var(--hover-bg);
+}
+
+.roadmap-collapse-icon {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--text);
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+}
+
+.roadmap-status {
+    font-size: 1.2rem;
+}
+
+.roadmap-section-title {
+    flex: 1;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.roadmap-section-status {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background: var(--border);
+    color: var(--text);
+}
+
+.roadmap-status-completed + * + .roadmap-section-status {
+    background: #28a745;
+    color: #fff;
+}
+
+.roadmap-status-in-progress + * + .roadmap-section-status {
+    background: #ffc107;
+    color: #000;
+}
+
+.roadmap-status-planned + * + .roadmap-section-status {
+    background: #6c757d;
+    color: #fff;
+}
+
+.roadmap-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.roadmap-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.roadmap-item:last-child {
+    border-bottom: none;
+}
+
+.roadmap-item-title {
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+}
+
+.roadmap-item-description {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 0.25rem;
+}
+
+.roadmap-item-priority {
+    font-size: 0.75rem;
+    color: var(--text);
+    opacity: 0.7;
+    font-weight: bold;
+}
+
+.roadmap-item-count {
+    font-size: 0.8rem;
+    color: var(--text);
+    opacity: 0.7;
+}
+
+.roadmap-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.8;
+}
+
+.roadmap-footer p {
+    margin: 0.25rem 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .burger-menu-panel,
+    .burger-permissions-panel,
+    .burger-roadmap-panel {
+        width: 100vw;
+        max-width: 100vw;
+        border-left: none;
+        border-top: 2px solid var(--accent);
+    }
+
+    .burger-nav-link {
+        padding: 1.25rem 1rem;
+        font-size: 1.1rem;
+    }
+
+    .permission-item {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+
+    .permission-toggle {
+        align-self: flex-end;
+        width: 3rem;
+        height: 3rem;
+    }
+}

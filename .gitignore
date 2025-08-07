@@ -1,8 +1,6 @@
+client/node_modules/
 node_modules/
-build/
-chatlogs.sqlite
-public/empires.json
-public/treaties.json
-public/empireinfo.json
 
 .idea/
+client/instructions.md
+client/design_pattern_plan.md
