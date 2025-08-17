@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import BurgerMenuView from './BurgerMenuView';
-import BurgerMenuState from './BurgerMenuState';
+import BurgerMenuState from '../../../business/state/BurgerMenuState';
 import { NavigationItem } from '../../../data/types/BurgerMenuTypes';
 
 /**

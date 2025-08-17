@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationItem } from '../../../data/types/BurgerMenuTypes';
-import BurgerMenuState from './BurgerMenuState';
+import BurgerMenuState from '../../../business/state/BurgerMenuState';
 import NavigationList from './NavigationList';
 import PermissionsPanel from './PermissionsPanel';
 import RoadmapPanel from './RoadmapPanel';

@@ -1,44 +1,48 @@
 
 import React, { useState } from 'react';
+import { useEmpirePage } from '../hooks/useEmpirePage';
+import { StandardizedMessage } from '../components/common/StandardizedMessage';
 import EmpireInfoListController from '../../business/controllers/empire/EmpireInfoListController';
 import SearchSortBar from '../components/common/SearchSortBar';
 
 /**
- * EmpirePage (Presentation Layer Only)
- * Fixed to remove direct cache operations and data management.
- * All business logic is now properly delegated to controllers.
+ * EmpirePage (Presentation Layer)
+ * Uses presentation hook to maintain proper separation of concerns.
+ * All business logic is delegated through the useEmpirePage hook.
  */
 export default function EmpirePage() {
+    const {
+        empires,
+        loading,
+        error,
+        success,
+        refreshEmpires,
+        clearError,
+        clearSuccess
+    } = useEmpirePage();
+
     const [empireSearch, setEmpireSearch] = useState('');
     const [empireSort, setEmpireSort] = useState('name');
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
-
-    const showSuccess = (text: string) => {
-        setMessage({ type: 'success', text });
-    };
-
-    const showError = (text: string) => {
-        setMessage({ type: 'error', text });
-    };
-
-    const clearMessage = () => {
-        setMessage(null);
-    };
 
     const handleEmpireInfoSaved = () => {
-        showSuccess('Empire information saved successfully');
+        refreshEmpires();
     };
 
     return (
         <div className="empires-info-section card">
             <h2>Empire Information</h2>
             
-            {message && (
-                <div className={`message ${message.type}`}>
-                    {message.text}
-                    <button onClick={clearMessage}>×</button>
-                </div>
-            )}
+            {/* Standardized Success/Error Messages */}
+            <StandardizedMessage 
+                type="error"
+                message={error}
+                onDismiss={clearError}
+            />
+            <StandardizedMessage 
+                type="success"
+                message={success}
+                onDismiss={clearSuccess}
+            />
             
             <SearchSortBar
                 searchValue={empireSearch}

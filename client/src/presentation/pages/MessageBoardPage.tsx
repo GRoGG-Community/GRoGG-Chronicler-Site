@@ -1,73 +1,60 @@
 import React from 'react';
-import '../styles/Boards.css';
 import MessageBoardController from '../../business/controllers/MessageBoardController';
+import { StandardizedMessage } from '../components/common/StandardizedMessage';
 import { LoadingMessage, EmptyMessage } from '../components/common/Messages';
-import useAccount from '../../business/hooks/application/useAccount';
-import EmpireDataController from '../../business/controllers/EmpireDataController';
-import { Empire } from '../../data/models/Empire';
+import { useMessageBoardPage } from '../hooks/useMessageBoardPage';
 import MessageList from '../components/common/MessageListContainer';
 
-export default function MessageBoardPageWrapper() {
-    const { account } = useAccount();
+/**
+ * MessageBoardPage (Presentation Layer)
+ * Uses presentation hook and business controller for messaging functionality.
+ * Maintains existing message board behavior with proper layer separation.
+ * Enhanced with standardized error handling patterns.
+ */
+export default function MessageBoardPage() {
+    const { 
+        account, 
+        empires, 
+        loading, 
+        error, 
+        success, 
+        clearError, 
+        clearSuccess,
+        postMessageWithHandling,
+        deleteMessageWithHandling,
+        editMessageWithHandling
+    } = useMessageBoardPage();
+
+    if (loading) {
+        return <LoadingMessage>Loading empires...</LoadingMessage>;
+    }
+
+    if (!account || !empires) {
+        return <LoadingMessage>Loading...</LoadingMessage>;
+    }
+
+    const typedAccount = { username: account.name };
 
     return (
-        <EmpireDataController>
-            {({ empires, loading }: { empires: Empire[], loading: boolean }) => {
-                if (loading) {
-                    return <LoadingMessage>Loading empires...</LoadingMessage>;
-                }
-
-                return <MessageBoardPageUI 
-                    account={account ? { username: account.name } : null} 
-                    empires={empires} 
-                />;
-            }}
-        </EmpireDataController>
-    );
-}
-
-interface MessageBoardPageProps {
-    account: { username: string } | null;
-    empires: Empire[];
-}
-
-interface MessageBoardControllerProps {
-    selected: string | null;
-    setSelected: (pair: [string, string]) => void;
-    filteredBoards: [string, string][];
-    messages: Record<string, any[]>;
-    setMessages: React.Dispatch<React.SetStateAction<Record<string, any[]>>>;
-    text: string;
-    setText: React.Dispatch<React.SetStateAction<string>>;
-    postMessage: (e: React.FormEvent<HTMLFormElement>) => void;
-    messagesEndRef: React.RefObject<HTMLDivElement>;
-    handleDeleteMessage: (boardKey: string, msgIdx: number) => void;
-    handleEditMessage: (boardKey: string, idx: number, currentText: string) => void;
-    handleEditOriginalTooltip: (boardKey: string, idx: number, originalText: string) => void;
-    handleEditMsgSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    handleEditMsgCancel: () => void;
-    editMsgIdx: number | null;
-    editMsgText: string;
-    setEditMsgText: React.Dispatch<React.SetStateAction<string>>;
-    editMsgOriginal: boolean;
-    getLinkedBoards: () => [string, string][];
-    getEmpireAccount: (empireName: string) => string | null;
-    account: { username: string };
-    empires: Empire[];
-}
-
-
-const MessageBoardPageUI: React.FC<MessageBoardPageProps> = ({ account, empires }) => {
-    if (!account || !empires) return <LoadingMessage>Loading...</LoadingMessage>;
-
-    return (
-        <MessageBoardController account={account} empires={empires}>
+        <div>
+            {/* Standardized Success/Error Messages */}
+            <StandardizedMessage 
+                type="error"
+                message={error || ''}
+                onDismiss={clearError}
+            />
+            <StandardizedMessage 
+                type="success"
+                message={success || ''}
+                onDismiss={clearSuccess}
+            />
+            
+            <MessageBoardController account={typedAccount} empires={empires}>
             {({
                 selected,
                 setSelected,
                 filteredBoards,
                 messages,
-                setMessages,
                 text,
                 setText,
                 postMessage,
@@ -80,24 +67,25 @@ const MessageBoardPageUI: React.FC<MessageBoardPageProps> = ({ account, empires 
                 editMsgIdx,
                 editMsgText,
                 setEditMsgText,
-                editMsgOriginal,
-                getLinkedBoards,
-                getEmpireAccount,
-                account,
-                empires,
-            }: MessageBoardControllerProps) => (
+                editMsgOriginal
+            }) => (
                 <section className="channels-main">
                     <aside className="channels-sidebar">
                         <div className="boards-list">
                             <h2>Diplomatic Channels</h2>
                             <ul className="boards-list-ul">
                                 {filteredBoards.length === 0 && (
-                                    <li className="no-channels"><EmptyMessage>No available channels.</EmptyMessage></li>
+                                    <li className="no-channels">
+                                        <EmptyMessage>No available channels.</EmptyMessage>
+                                    </li>
                                 )}
                                 {filteredBoards.map((pair: [string, string]) => {
                                     const key = pair.join('|');
                                     return (
-                                        <li className={`boards-list-item${key === selected ? ' active' : ''}`} key={key}>
+                                        <li 
+                                            className={`boards-list-item${key === selected ? ' active' : ''}`} 
+                                            key={key}
+                                        >
                                             <button
                                                 className="board-btn"
                                                 onClick={() => setSelected(pair)}
@@ -112,6 +100,7 @@ const MessageBoardPageUI: React.FC<MessageBoardPageProps> = ({ account, empires 
                             </ul>
                         </div>
                     </aside>
+                    
                     <main className="channels-content">
                         <div className="board-messages">
                             {selected ? (
@@ -123,14 +112,14 @@ const MessageBoardPageUI: React.FC<MessageBoardPageProps> = ({ account, empires 
                                         <MessageList
                                             messages={messages[selected] || []}
                                             selected={selected}
-                                            account={account}
-                                            gmPermissions={{ canDeleteMessages: account.username === 'GameMaster' }}
+                                            account={typedAccount}
+                                            gmPermissions={{ canDeleteMessages: typedAccount.username === 'GameMaster' }}
                                             handleDeleteMessage={handleDeleteMessage}
                                             handleEditMessage={handleEditMessage}
                                             handleEditOriginalTooltip={handleEditOriginalTooltip}
                                             messagesEndRef={messagesEndRef}
                                         />
-                                        <form className="message-form" onSubmit={postMessage}>
+                                        <form className="message-form" onSubmit={editMsgIdx !== null ? handleEditMsgSubmit : postMessage}>
                                             {editMsgIdx !== null ? (
                                                 <div className="edit-message-form">
                                                     <input
@@ -166,5 +155,6 @@ const MessageBoardPageUI: React.FC<MessageBoardPageProps> = ({ account, empires 
                 </section>
             )}
         </MessageBoardController>
+        </div>
     );
-};
+}

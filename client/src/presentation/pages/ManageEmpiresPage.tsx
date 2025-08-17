@@ -1,78 +1,88 @@
 import React, { useState } from 'react';
+import { useEmpirePage } from '../hooks/useEmpirePage';
+import { StandardizedMessage } from '../components/common/StandardizedMessage';
 import EmpireManagementController from '../../business/controllers/empire/EmpireManagementController';
 import EmpireCreationForm from '../components/empire/management/EmpireCreationForm';
 import EmpireNameEdit from '../components/empire/management/EmpireNameEdit';
 import type { Empire } from '../../data/models/Empire';
 
 /**
- * ManageEmpiresPage (Migrated to New Architecture)
- * Uses the new EmpireManagementController for consistent architecture.
- * Follows the same pattern as AccountPage structure.
- * Implements proper separation of concerns and controller patterns.
+ * ManageEmpiresPage (Presentation Layer)
+ * Uses presentation hook to maintain proper separation of concerns.
+ * All business logic is delegated through the useEmpirePage hook.
  */
 export default function ManageEmpiresPage() {
+    const {
+        empires,
+        loading,
+        error,
+        success,
+        refreshEmpires,
+        clearError,
+        clearSuccess
+    } = useEmpirePage();
+
     const [editingEmpire, setEditingEmpire] = useState<Empire | null>(null);
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
     const handleEdit = (empire: Empire) => {
         setEditingEmpire(empire);
-        setMessage(null);
     };
 
-    const showSuccess = (text: string) => {
-        setMessage({ type: 'success', text });
-    };
-
-    const showError = (text: string) => {
-        setMessage({ type: 'error', text });
-    };
-
-    const clearMessage = () => {
-        setMessage(null);
-    };
     const handleDelete = (empireId: string) => {
-        showSuccess('Empire deleted successfully');
+        refreshEmpires();
     };
 
     const handleLink = (empireId: string, accountName: string) => {
-        showSuccess(`Empire linked to ${accountName} successfully`);
+        refreshEmpires();
     };
 
     const handleUnlink = (empireId: string) => {
-        showSuccess('Empire unlinked successfully');
+        refreshEmpires();
     };
 
     const handleEmpireCreated = () => {
-        showSuccess('Empire created successfully');
+        refreshEmpires();
     };
 
     const getEmpireAccount = (empireIdOrName: string): string | null => {
-        // This should be handled by the business layer
-        return null;
+        // Find empire by ID or name and return its account
+        const empire = empires.find(emp => 
+            emp.id === empireIdOrName || emp.name === empireIdOrName
+        );
+        return empire?.account || null;
     };
 
-    const clearMessages = () => {
-        clearMessage();
+    const handleEmpireUpdated = () => {
+        setEditingEmpire(null);
+        refreshEmpires();
+    };
+
+    const handleCancelEdit = () => {
+        setEditingEmpire(null);
     };
 
     return (
         <section className="empire-manage-section card">
             <h2>Manage Empires</h2>
             
-            {/* Success/Error Messages */}
-            {message && (
-                <div className={`${message.type}-message`} onClick={clearMessage}>
-                    {message.text}
-                </div>
-            )}
+            {/* Standardized Success/Error Messages */}
+            <StandardizedMessage 
+                type="error"
+                message={error}
+                onDismiss={clearError}
+            />
+            <StandardizedMessage 
+                type="success"
+                message={success}
+                onDismiss={clearSuccess}
+            />
 
-            {/* Empire Creation Form - Always visible like AccountPage */}
+            {/* Empire Creation Form */}
             <EmpireCreationForm
-                existingEmpires={[]} // Let form fetch its own data through business layer
+                existingEmpires={empires}
                 onEmpireCreated={handleEmpireCreated}
                 onCancel={() => {
                     // No cancel action needed since form is always visible
-                    clearMessages();
                 }}
             />
 
@@ -91,17 +101,11 @@ export default function ManageEmpiresPage() {
                     <h3>Edit Empire: {editingEmpire.name}</h3>
                     <EmpireNameEdit
                         empire={editingEmpire}
-                        existingEmpires={[]} // Let component fetch its own data
-                        onCancel={() => {
-                            setEditingEmpire(null);
-                            clearMessages();
-                        }}
-                        onSuccess={() => {
-                            setEditingEmpire(null);
-                            showSuccess('Empire name updated successfully');
-                        }}
+                        existingEmpires={empires}
+                        onCancel={handleCancelEdit}
+                        onSuccess={handleEmpireUpdated}
                         onError={(errorMsg: string) => {
-                            showError(errorMsg);
+                            // Error handled by the hook
                         }}
                     />
                 </div>

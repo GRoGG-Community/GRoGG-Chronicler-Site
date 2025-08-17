@@ -1,84 +1,121 @@
 import React, { useState } from 'react';
+import { useAccountPage } from '../hooks/useAccountPage';
+import { StandardizedMessage } from '../components/common/StandardizedMessage';
 import AccountInfoController from '../../business/controllers/account/AccountInfoController';
 import AccountManagementController from '../../business/controllers/account/AccountManagementController';
-import Account from '../../data/models/Account';
 
 /**
- * AccountPage (Presentation Layer Only)
- * Fixed to remove direct cache operations and data management.
- * All business logic is now properly delegated to the controller.
+ * AccountPage (Presentation Layer)
+ * Uses presentation hook to maintain proper separation of concerns.
+ * Controllers are imported but through business layer, not directly accessed.
  */
 export default function AccountPage() {
-    const [editingAccount, setEditingAccount] = useState<Account | null>(null);
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+    const {
+        selectedTab,
+        handleTabChange,
+        selectedAccount,
+        handleAccountSelect,
+        accounts,
+        loading,
+        error,
+        success,
+        refreshAccounts,
+        clearError,
+        clearSuccess
+    } = useAccountPage();
 
-    const showSuccess = (text: string) => {
-        setMessage({ type: 'success', text });
-    };
-
-    const showError = (text: string) => {
-        setMessage({ type: 'error', text });
-    };
-
-    const clearMessage = () => {
-        setMessage(null);
-    };
+    const [editingAccount, setEditingAccount] = useState<{ id: number; name: string; password: string } | null>(null);
 
     const handleEdit = (accountName: string) => {
-        // Let the controller handle account lookup
-        setEditingAccount({ name: accountName, id: 0, password: '' }); // Simplified for presentation layer
-        clearMessage();
+        // Find the account by name and set it for editing
+        const account = accounts.find(acc => acc.name === accountName);
+        if (account) {
+            setEditingAccount({
+                id: typeof account.id === 'string' ? parseInt(account.id) : account.id,
+                name: account.name,
+                password: account.password || ''
+            });
+        }
     };
 
     const handleDelete = (accountName: string) => {
-        setEditingAccount(null); // Close edit panel if the deleted account was being edited
-        showSuccess('Account deleted successfully');
+        // Close edit panel if the deleted account was being edited
+        if (editingAccount && editingAccount.name === accountName) {
+            setEditingAccount(null);
+        }
+        refreshAccounts();
     };
 
-    const handleAccountCreated = () => {
-        showSuccess('Account created successfully');
+    const handleAccountUpdated = () => {
+        setEditingAccount(null);
+        refreshAccounts();
     };
 
-    const clearMessages = () => {
-        clearMessage();
+    const handleCancelEdit = () => {
+        setEditingAccount(null);
     };
 
     return (
         <section className="account-manage-section card">
             <h2>Manage Accounts</h2>
             
-            {/* Success/Error Messages */}
-            {message && (
-                <div className={`${message.type}-message`} onClick={clearMessage}>
-                    {message.text}
+            {/* Standardized Success/Error Messages */}
+            <StandardizedMessage 
+                type="error"
+                message={error}
+                onDismiss={clearError}
+            />
+            <StandardizedMessage 
+                type="success"
+                message={success}
+                onDismiss={clearSuccess}
+            />
+
+            {/* Tab Navigation */}
+            <div className="tab-navigation">
+                <button 
+                    className={selectedTab === 'info' ? 'active' : ''}
+                    onClick={() => handleTabChange('info')}
+                >
+                    Account Info
+                </button>
+                <button 
+                    className={selectedTab === 'management' ? 'active' : ''}
+                    onClick={() => handleTabChange('management')}
+                >
+                    Management
+                </button>
+            </div>
+
+            {/* Account Creation Form */}
+            {selectedTab === 'info' && (
+                <div className="account-create-section">
+                    <h3>Create New Account</h3>
+                    <AccountInfoController
+                        updateAccounts={refreshAccounts}
+                    />
                 </div>
             )}
 
-            {/* Account Creation Form - Always visible like ManageEmpiresPage */}
-            <AccountInfoController
-                updateAccounts={handleAccountCreated}
-            />
-
-            <h3>All Accounts</h3>
-            <AccountManagementController
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                editAccountLoading={false}
-            />
+            {/* Account List and Management */}
+            {selectedTab === 'management' && (
+                <div className="account-list-section">
+                    <h3>All Accounts</h3>
+                    <AccountManagementController
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                        editAccountLoading={loading}
+                    />
+                </div>
+            )}
 
             {/* Account Editing */}
             {editingAccount && (
                 <div className="account-edit-section">
                     <h3>Edit Account: {editingAccount.name}</h3>
                     <AccountInfoController
-                        updateAccounts={() => {
-                            setEditingAccount(null);
-                            showSuccess('Account updated successfully');
-                        }}
-                        onCancel={() => {
-                            setEditingAccount(null);
-                            clearMessage();
-                        }}
+                        updateAccounts={handleAccountUpdated}
+                        onCancel={handleCancelEdit}
                         accountId={editingAccount.id}
                         accountName={editingAccount.name}
                         accountPass=""

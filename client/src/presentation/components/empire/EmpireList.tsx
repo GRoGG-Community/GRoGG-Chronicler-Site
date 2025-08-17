@@ -6,7 +6,7 @@ import ListContainer from '../common/ListContainer';
 import AccountDropdown from '../common/AccountDropdown';
 import { Empire, EmpireListProps } from '../../../data/models/Empire';
 import { Account } from '../../../data/types/AccountTypes';
-import { useAccountSelection } from '../../../business/hooks/presentation/useAccountSelection';
+import { useAccountSelection } from '../../hooks/useAccountSelection';
 
 export default function EmpireList({
     empires,

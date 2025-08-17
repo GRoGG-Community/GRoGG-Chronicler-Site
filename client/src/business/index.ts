@@ -25,8 +25,5 @@ export * from './hooks/business/useEmpireActions';
 export * from './hooks/business/useTreatyActions';
 export * from './hooks/business/useMessageActions';
 
-// Hooks - Presentation Layer
-export * from './hooks/presentation/usePageController';
-
 // Controllers
 export { default as MessageBoardController } from './controllers/MessageBoardController';
