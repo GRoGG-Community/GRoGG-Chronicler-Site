@@ -12,7 +12,11 @@ export class AccountDataService {
      */
     static async fetchAccountsRaw(): Promise<Array<Account>> {
         const res = await fetch('/api/accounts?ts=' + Date.now());
-        let data = assertAccountArray(await res.json());
+            if (!res.ok) {
+                const message = await res.text();
+                throw new Error(`Failed to fetch accounts: ${res.status} ${res.statusText} - ${message}`);
+            }
+            let data = assertAccountArray(await res.json());
         return data;
     }
 
@@ -32,7 +36,7 @@ export class AccountDataService {
      */
     static async editAccount(id: Account["id"], name: Account["name"], password: Account["password"]) {
         return await fetch(`api/accounts/${id}`, { 
-            method: 'PUT',
+                method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 id: id, 

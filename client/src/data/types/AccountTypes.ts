@@ -48,7 +48,6 @@ export interface AccountManagementListProps {
     onDelete: (accountName: string) => void;
     editAccountLoading: boolean;
     empires?: { id: string | number; name: string; account: string }[];
-    getLinkedEmpires?: (accountName: string, empires: any[]) => any[];
 }
 
 export interface AccountManagementControllerProps {
@@ -189,3 +188,10 @@ export interface AccountPermissions {
 export type AccountField = keyof Account;
 export type RequiredAccountFields = 'name' | 'password';
 export type OptionalAccountFields = Exclude<AccountField, RequiredAccountFields>;
+
+/**
+ * @deprecated Use Account from AccountTypes instead
+ */
+export type AccountMap = {
+    [name: string]: string;
+};

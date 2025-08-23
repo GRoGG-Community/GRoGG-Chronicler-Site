@@ -1,1 +1,0 @@
-Most of these files are temporary solutions. I know this stuff isn't secure at at all.

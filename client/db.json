@@ -58,34 +58,16 @@
   ],
   "empires": [
     {
-      "id": 1753812640301,
-      "name": "TestE1",
-      "account": "TestAcc1"
+      "name": "Test1",
+      "id": 1753812640301
     },
     {
-      "id": 1753813703212,
-      "name": "TestE2",
-      "account": "TestAcc2"
+      "name": "Test2",
+      "id": 1753813703212
     },
     {
-      "id": 1753813703213,
-      "name": "TestE3",
-      "account": "TestAcc3"
-    },
-    {
-      "id": 1754440080171,
-      "name": "TestE4",
-      "account": ""
-    },
-    {
-      "id": 1754442189939,
-      "name": "TestE5",
-      "account": ""
-    },
-    {
-      "id": 1754581633105,
-      "name": "TestE6",
-      "account": ""
+      "name": "Test3",
+      "id": 1753813703213
     }
   ],
   "treaties": [
@@ -112,18 +94,18 @@
     },
     {
       "id": 1,
-      "name": "TestAcc1",
+      "name": "test1",
       "password": "test"
     },
     {
       "id": 2,
-      "name": "TestAcc2",
-      "password": "test"
+      "name": "test2",
+      "password": "test2"
     },
     {
       "id": 1753968505632,
-      "name": "TestAcc3",
-      "password": ""
+      "name": "TestAcc",
+      "password": "1"
     }
   ]
 }
